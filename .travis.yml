@@ -26,9 +26,9 @@ deploy:
 cache:
   directories:
   - node_modules
-branches:
-  only:
-    - master
+# branches:
+#   only:
+#     - master
 env:
  global:
    - GH_REF: github.com:warriorsword1989/travisMain.git
