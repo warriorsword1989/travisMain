@@ -1,0 +1,227 @@
+<style>
+    .searchPanel .inputWrapper {
+        position: absolute;
+        right: 0px;
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        transition: all .3s cubic-bezier(0, 1.24, 0.58, 0.97);
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        z-index: 1;
+    }
+    .searchPanel .inputWrapper.active {
+        opacity: 1;
+        /*right: 2px;*/
+        background: #fff;
+        width: 250px;
+        box-shadow: 0 0 10px #93bbff;
+    }
+    .searchPanel .search-model {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #eee;
+        cursor: pointer;
+    }
+    .searchPanel .inputWrapper .searchInput{
+        border: none;
+        width: 0;
+        font-size: 12px;
+        height: 30px;
+        position: relative;
+        border: none;
+        background: transparent;
+        transition: all 0.1s cubic-bezier(0, 1.37, 1, 0.96) 0.3s;
+    }
+    .searchPanel .inputWrapper.active .searchInput{
+        width: 210px;
+        padding: 10px;
+        /*left: 30px;*/
+        /*border-bottom: 1px solid #44A9FF;*/
+    }
+    .searchPanel .inputWrapper.active .searchInput:focus{
+        box-shadow: 0px 0px 10px 0px rgba(147, 187, 255, 1);
+        border: solid 1px rgba(88, 150, 255, 1);
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+    .searchPanel .inputWrapper .searchIcon {
+        position: absolute;
+        top: 0;
+        right: 3px;
+        height: 30px;
+        width: 30px;
+        color: rgba(88, 150, 255, 1);;
+        border: none;
+        font-size: 16px;
+        background: #fff;
+        border-radius: 15px;
+        font-weight: normal;
+        box-shadow: 0 0 10px #93bbff;
+        /*transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);*/
+        /*transition-delay: 0.3s;*/
+    }
+    .searchPanel .inputWrapper.active .searchIcon {
+        left: 0px;
+        background: transparent;
+        box-shadow: none;
+    }
+    .searchPanel .senior {
+        right: 0;
+        width: 40px;
+        height: 30px;
+        top: 0;
+        color: white;
+        line-height: 22px;
+        text-align: center;
+        display: none;
+        background-color: transparent;
+        position: absolute;
+    }
+    .searchPanel .inputWrapper.active .senior{
+        display: block;
+        background-color: rgba(88, 150, 255, 1);
+        transition: all 0.3s ease 0.6s;
+        background-image: url(../../images/newRoad/rightPanelIcon/icon_searchmore.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .searchPanel .kindList,.searchPanel .resultList {
+        text-align: left;
+        cursor: pointer;
+        border-bottom: solid 1px #d2e1ff;
+        border-left: solid 1px #d2e1ff;
+        border-right: solid 1px #d2e1ff;
+        background-color: white;
+        height: 300px;
+        width: 100%;
+        top: 32px;
+        position: relative;
+        overflow-y: auto;
+        z-index: 1;
+    }
+    .kindList.hide {
+        display: none;
+    }
+    .resultList.hide {
+        display: none;
+    }
+    .searchPanel .kindList ul.first {
+        list-style-type: none;
+        padding: 6px 2px;
+        font-weight: bold;
+    }
+    .searchPanel .kindList ul.first > li {
+        padding: 2px 10px;
+    }
+    .searchPanel .kindList ul.first > li > span > img{
+        margin-right: 6px;
+    }
+    .searchPanel .kindList ul.second {
+        list-style-type: none;
+        padding: 2px 18px;
+    }
+    .searchPanel .kindList ul.second > li {
+        padding: 2px 10px;
+    }
+    .searchPanel .kindList ul.second > li .selected {
+        color: #636EF5;
+    }
+    .searchPanel .resultList table {
+        width: 100%;
+        font-weight: bold;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .searchPanel .resultList table td{
+        padding-top: 6px;
+        padding-left: 10px;
+        color: #000000 !important;
+    }
+    .searchPanel .resultList table .trPid{
+        width: 30%;
+    }
+    .searchPanel .resultList table .trName{
+        width: 70%;
+    }
+    .searchPanel .resultList table a{
+        color: #000000 !important;
+    }
+    /*分页*/
+    .topSearchPager {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 10px 10px 10px 0;
+    }
+    .topSearchPager.pagination>li>a, .topSearchPager.pagination>li>span {
+        padding: 3px 7px;
+        color: #44A9FF;
+    }
+    .topSearchPager.pagination>.active>a, .topSearchPager.pagination>.active>span {
+        z-index: 2;
+        color: #fff;
+        cursor: default;
+        background-color: #44A9FF;
+        border-color: #44A9FF;
+    }
+</style>
+<div ng-controller="searchToolCtrl">
+    <div class="searchPanel">
+        <div class="inputWrapper" ng-class="{'inputWrapper': true, 'active': !searchInputStatus}">
+            <input class="searchInput" value="310000240" ng-model="searchText" ng-click="showKindPanel();" placeholder="搜索名称，PID" ng-keypress="doSearch($event);" ng-blur="clearMarker()">
+            <button class="inputButton searchIcon" ng-click="showAction($event);" ng-show="searchInputStatus"><span class="glyphicon glyphicon-search"></span></button>
+            <span class="inputButton senior" style="cursor: pointer" ng-click="showAdvanceSearchPanel()"></span>
+        </div>
+        <div class="kindList fm-scroll" ng-class="{true:'hide'}[!showKindFlag]">
+            <ul class="first">
+                <li ng-repeat="item in kindList" >
+                    <span ng-click="selectFirst(item);"><img ng-src="{{item.selected ? openImg : closeImg}}">{{item.name}}</span>
+                    <ul class="second" ng-show="item.selected">
+                        <li ng-repeat="child in item.children" ng-click="selectSecond(child);">
+                            <span ng-class="{true:'selected'}[child.selected]">{{child.name}}</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="resultList fm-scroll" ng-class="{true:'hide'}[!showResultFlag]">
+            <div style="text-align: center; padding: 10px;" ng-if="searchLoading">正在加载....</div>
+            <div style="text-align: center; padding: 10px;" ng-if="!searchDataList.length && !searchLoading">没有搜到结果</div>
+            <table ng-if="searchDataList.length" class="fm-scroll" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td class="trPid">pid</td>
+                        <td class="trName">名称（类型）</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-click="showInmap(item);" ng-repeat="item in searchDataList">
+                        <td class="trPid"><a href="javascript:void(0);">{{item.shortPid}}</a> </td>
+                        <td class="trName">{{item.shortName ? item.shortName : item.type }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--分页-->
+            <ul ng-show="pagation.total>1" class="topSearchPager" uib-pagination
+                force-ellipses="true"
+                total-items="pagation.total"
+                ng-model="pagation.pageNum"
+                max-size="pagation.maxSize"
+                class="pagination-sm pull-right"
+                boundary-link-numbers="true"
+                rotate="false"
+                direction-links="false"
+                ng-change="goToPage()">
+
+            </ul>
+        </div>
+    </div>
+</div>

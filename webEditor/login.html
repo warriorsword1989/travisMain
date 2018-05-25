@@ -1,0 +1,217 @@
+<link href="../../styles/webEditor/login.css" rel="stylesheet" type="text/css"/>
+<style>
+    .bgVideo{
+        overflow: hidden;
+        object-fit: fill;
+    }
+    .loginDiv {
+        width: 480px;
+        height: 570px;
+        margin-top: -325px;
+        margin-left: -240px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        /*background-image: url('../../images/webEditor/login/login_bg.png');*/
+        background-size: 100% 100%;
+    }
+    .userIcon {
+        height: 120px;
+        width: 120px;
+        /*padding-top: 10px;*/
+    }
+    .inputIcon{
+        width: 20px;
+        height: 20px;
+        left:35px;
+        position: relative;
+    }
+    .inputText {
+        display: inline-block;
+        border: #636ef5 1px solid;
+        border-radius: 3px;
+        font-size: 14px;
+        color: #666666;
+        width: 360px;
+        height: 40px;
+        padding-left: 40px;
+    }
+    .submitButton{
+        width: 360px;
+        height: 40px;
+        margin-top: 10px;
+        margin-left: 24px;
+        font-size: 18px;
+        color: #FFFFFF;
+        background-image: url("../../images/webEditor/login/button_login_normal.png");
+        text-align: center;
+        border: 1px #636ef5;
+        border-radius: 3px;
+    }
+
+    .loginTitle {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+        color: #636ef5;
+        font-weight: bold;
+        font-family: '微软雅黑';
+    }
+
+    .loginForm {
+        padding-top: 2px;
+        padding-left: 35px;
+        padding-right: 30px
+    }
+    .inputDiv{
+        padding-top: 30px;
+        position: relative;
+    }
+    /*.inputDiv .inputText:focus + .emptyPassword{*/
+        /*display: block !important;*/
+    /*}*/
+    .submitButton:hover {
+        background-image: url("../../images/webEditor/login/button_login_hover.png");
+        cursor: pointer;
+    }
+    .submitButton:active {
+        background-image: url("../../images/webEditor/login/button_login_loading.png");
+    }
+    .submitButton:disabled{
+        background-image: url("../../images/webEditor/login/button_login_gray.png");
+    }
+    .checkBoxDiv{
+        width:100%;
+        height: 21px;
+        margin-top: 30px;
+        padding-right: 30px;
+        margin-bottom:0;
+    }
+    .emptyPassword{
+        position: absolute;
+        right: 42px;
+        top: 39px;
+    }
+    .emptyPassword:hover{
+        cursor: pointer;
+    }
+    .loginFail{
+        font-size: 14px;
+        color: #fa5883;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .loginFailHidden {
+        visibility: hidden;
+    }
+    .loginFailVisible{
+        visibility: visible;
+    }
+    .failImg{
+        width: 22px;
+        height: 20px;
+        display: inline-block;
+        position: relative;
+        top: -3px;
+    }
+    .loading{
+        width: 20px;
+        height: 20px;
+    }
+    .login-load-image {
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+        background-repeat: no-repeat;
+        background-image: url(../../images/webEditor/login/icon_loading.gif);
+    }
+    .login-title-bg{
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        margin: 0 auto;
+    }
+    .login-container-bg{
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    .login-container-bg select.login-select {
+        border-color: #636ef5;
+        border-radius: 3px;
+        padding: 0 12px 0 10px;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: url('../../images/webEditor/form/select-close.png') no-repeat right center transparent;
+        background-origin: content-box;
+        outline: none;
+        background-color: rgb(250, 255, 189);
+    }
+
+    .login-container-bg select.login-select:focus {
+        border-color: #5693ff;
+        background: url('../../images/webEditor/form/select-open.png') no-repeat right center transparent;
+        background-origin: content-box;
+        color: #5693ff;
+        background-color: rgb(250, 255, 189);
+    }
+
+    .login-container-bg select.login-select > option {
+        background-color: #ffffff;
+    }
+</style>
+<div ng-controller="loginCtrl">
+    <div ng-style="bgDiv">
+    <video class="bgVideo" poster="../../images/webEditor/login/firstframes.png">
+       <!-- <source src="../../images/webEditor/login/2.mp4" type="video/mp4"/>-->
+    </video>
+    </div>
+    <div class="loginDiv" ng-style="loginDiv">
+        <div class="login-title-bg" ng-style="titleBgStyle">
+            <img class="userIcon" ng-style="userIcon" src="../../images/webEditor/login/login_usericon.png">
+        </div>
+        <div class="login-container-bg" ng-style="containerBgStyle">
+            <div class="loginTitle" ng-style="loginTitle">
+                <span >FastMap | 一体化编辑平台</span>
+            </div>
+            <form class="loginForm" ng-style="loginForm">
+                <div class="inputDiv" ng-style="inputDiv">
+                    <select class="login-select" ng-style="accessSelect" ng-options="item.type as item.text for item in typeList"
+                            ng-model="accessType">
+                    </select>
+                </div>
+                <div class="inputDiv" ng-style="inputDiv">
+                    <img  class="inputIcon" ng-style="inputIcon" src="../../images/webEditor/login/icon_user.png">
+                    <input class="inputText" ng-style="inputText" type="text" name="user" ng-model="userName"
+                           placeholder="请输入用户名"/>
+                    <!--<img class="emptyPassword" ng-style="emptyPassword" ng-show="emptyUsrFlag" ng-click="emptyUsr()" src="../../images/webEditor/login/icon_delate.png">-->
+                </div>
+                <div class="inputDiv" ng-style="inputDiv">
+                    <img class="inputIcon" ng-style="inputIcon" src="../../images/webEditor/login/icon_secret.png">
+                    <input class="inputText" ng-style="inputText" type="password" ng-model="password"  name="userpassword" maxlength="32"
+                           placeholder="请输入密码"/>
+                    <!--<img class="emptyPassword" ng-style="emptyPassword" ng-show="emptyImgFlag" ng-click="emptyPwd()" src="../../images/webEditor/login/icon_delate.png">-->
+                </div>
+                <div  class="checkBoxDiv" ng-style="checkBoxDiv">
+                    <label style=" float: right; margin-bottom: 0;" ng-click="changeForgetMe()">
+                        <span ng-style="loginRememberSpan"> 记住我 </span>
+                        <img ng-style="loginRememberImg" ng-src="../../images/poi/main/rememberme_active.png" ng-show="rememberMe">
+                        <img ng-style="loginRememberImg" ng-src="../../images/poi/main/rememberme_normal.png" ng-show="!rememberMe">
+                        <input ng-model="rememberMe" type="checkbox" style="display: none">
+                    </label>
+                </div>
+                <!--</div>-->
+                <div class="loginFail" ng-style="loginFail" ng-class="errorFlag ? 'loginFailVisible': 'loginFailHidden'">
+                    <img  class="failImg" ng-style="failImg" style="object-fit: fill" src="../../images/webEditor/login/icon_login_fail.png"/>：登录失败啦！用户名或密码错误！
+                </div>
+                <button class="submitButton"  ng-click="handleEvent()" class="form-control" type="submit" id="loginButton"
+                        ng-style="submitButton">
+                    <div class="login-load-image" ng-show="showLoadImg" ng-style="loginLoadStyle"></div>
+                    <span class="loading" ng-show="!showLoadImg">登&nbsp&nbsp录</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+

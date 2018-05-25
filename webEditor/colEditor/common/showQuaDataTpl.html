@@ -1,0 +1,181 @@
+<style>
+
+    /**质检样式**/
+    .datepicker.dropdown-menu button {
+        outline: 0;
+        border: 0
+    }
+
+    .datepicker.dropdown-menu tbody {
+        height: 180px;
+    }
+    .datepicker.dropdown-menu button {
+        border-radius: 0;
+        box-shadow: none;
+        background: #FFF;
+        color: #000;
+    }
+
+    .datepicker.dropdown-menu tbody button {
+        padding: 8px;
+        border: 0;
+        border-radius: 0;
+        background: #FFF;
+        box-shadow: none;
+    }
+    .datepicker.dropdown-menu tbody button:hover {
+        box-shadow: none;
+    }
+    .datepicker.dropdown-menu tbody .btn-primary {
+        background: #636ef5;
+        color: #fff;
+    }
+
+    .datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+        height: 65px
+    }
+
+    .qua-input{
+        height: 24px;
+    }
+
+    .qua-lang-input{
+        width: 370px;
+        height: 24px;
+    }
+
+    .qua-label{
+        float: left;
+        width: 80px;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .qua-info-content{
+        line-height: 2;
+        padding: 8px;
+    }
+
+    .qua-info-content select{
+        height: 24px;
+        padding: 0;
+    }
+
+    .qua-info-content .qua-input{
+        width: 128px;
+        height: 24px;
+    }
+
+    .qua-btn{
+        margin: 6px 8px;
+        background-color: #636ef5;
+        color: #fff;
+    }
+
+    .qua-btn:hover{
+        color: #eee;
+    }
+    .chosen-container .chosen-container {
+        height: 24px;
+        margin-bottom: 10px;
+    }
+
+    .chosen-container .chosen-choices {
+        width: 370px;
+        height: 30px !important;
+        padding: 2px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+</style>
+<div class="fm-panel" ng-controller="showQuaDataCtrl" style="height:300px;width:500px;overflow: visible;">
+    <div class="qua-info-content" style="height:250px;">
+        <div class="col-md-12">
+            <label class="qua-label">更改后内容</label>
+            <div class="pull-left">
+                <input type="text" class="form-control qua-lang-input" ng-model="quaData.newValue" readonly>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="qua-label">更改前内容</label>
+            <div class="pull-left">
+                <input type="text" class="form-control qua-lang-input" ng-model="quaData.oldValue" readonly>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6">
+                <label class="qua-label">作业员</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.worker" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="qua-label">作业时间</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.workTime" data-date-format="yyyy-MM-dd" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker readonly>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6">
+                <label class="qua-label">质检员</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.qcWorker" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="qua-label">作业时间</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.qcTime" data-date-format="yyyy-MM-dd" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="qua-label">错误等级</label>
+            <div class="pull-left">
+                <select ng-model="quaData.errorLevel" class="form-control qua-lang-input" ng-options="qua for qua in errorLevels"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="qua-label">错误类型</label>
+            <div class="pull-left chosen-container">
+                <select multiple chosen ng-model="quaData.errorType" class="form-control qua-lang-input qua-chosen" ng-options="qua for qua in quasArray"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="qua-label">问题描述</label>
+            <div>
+                <input type="text" class="form-control qua-lang-input pull-right" ng-model="quaData.problemDesc" placeholder="问题描述" style="margin-right: 4px; margin-bottom: 5px;" ng-disabled="main.workType == 'addrSplit'">
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6">
+                <label class="qua-label">技术指导</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.techGuidance">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="qua-label">指导实践</label>
+                <div>
+                    <input type="text" class="form-control qua-input" ng-model="quaData.techScheme">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="border-bottom: 1px solid #ddd;"></div>
+    <div style="text-align:right;">
+        <button type="button" class="btn qua-btn" ng-click="doSaveQua()">
+            保存
+        </button>
+    </div>
+</div>

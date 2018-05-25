@@ -1,0 +1,123 @@
+<div ng-controller="hmEngAddressEditCtrl">
+    <div style="padding: 10px" class="fm-edit-table">
+        <div class="fm-panel">
+            <div class="fm-panel-heading">
+                <span>{{main.selectedItem.name}}</span>
+                <span class="right">
+                    <button style="margin-right: 10px;" type="button" class="btn btn-gap my-btn-success" ng-click="batchEdit();">批量作业</button>
+                </span>
+            </div>
+            <div class="fm-panel-body engAddressTable" ng-style="panelBodyHight" style="padding-bottom: 0px;">
+                <div
+                    ui-grid="editGridOptions"
+                    ui-grid-selection
+                    ui-grid-auto-resize
+                    ui-grid-resize-columns
+                    class="fm-grid col-grid purple" ng-style="tableBodyHeight">
+                    <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+                </div>
+            </div>
+            <div class="fm-panel-footer" style="text-align: right">
+                <button type="button" class="btn btn-gap my-btn-primary" ng-click="doSave();">保 存</button>
+            </div>
+        </div>
+    </div>
+    <div class="fm-modal" drag ng-show="popViewFlag">
+        <div style="padding: 10px;width: 540px;height: 295px;" class="fm-edit-table">
+            <div class="fm-panel">
+                <div class="fm-panel-heading cursor-point" drag-handle style="padding-top: 4px;">
+                    <span>详细信息</span>
+                    <button type="button" class="close" ng-click="closePop();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="fm-panel-body fm-scroll" style="max-height: 246px;">
+                    <table class="table table-bordered" style="margin-bottom: 0px;">
+                        <tbody>
+                            <tr>
+                                <td class="tdTitle">PID</td>
+                                <td>{{viewOjbect.pid}}</td>
+                                <td class="tdTitle">作业员</td>
+                                <td>{{viewOjbect.worker}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdTitle">图幅号</td>
+                                <td>{{viewOjbect.meshId}}</td>
+                                <td class="tdTitle">地域</td>
+                                <td>{{viewOjbect.whole}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdTitle">全地址拼音</td>
+                                <td colspan="3">{{viewOjbect.pinyin}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdTitle">预处理英文地址</td>
+                                <td colspan="3">{{viewOjbect.fullname}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdTitle">POI_NUM</td>
+                                <td>{{viewOjbect.poiNum}}</td>
+                                <td class="tdTitle">图片</td>
+                                <td>{{viewOjbect.photos.length}}张
+                                    <button ng-click="showPhoto(viewOjbect.photos);" type="button" class="btn btn-gap my-btn-success">查看</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fm-modal" drag ng-show="imageModal" style="position: absolute;left: 0px;top: 0px;">
+        <div style="padding:10px;">
+            <div class="fm-panel">
+                <div class="fm-panel-heading cursor-point" drag-handle style="padding-top: 4px;">
+                    <span>图片查看</span>
+                    <button type="button" class="close" ng-click="closeImageModal();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="fm-panel-body" ng-include="imageModalTpl">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 批量作业面板 -->
+    <div class="fm-modal cursor-point" drag ng-show="batchEditDialog">
+        <div style="padding: 10px;width: 400px;height: 270px;" class="fm-edit-table" >
+            <div class="fm-panel">
+                <div class="fm-panel-heading" drag-handle style="padding-top: 4px;">
+                    <span>批量作业</span>
+                    <button type="button" class="close" ng-click="clearSearch();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="fm-panel-body" style="text-align: center">
+                    <table class="table" style="margin-bottom: 10px;">
+                        <tbody>
+                        <tr>
+                            <td style="padding-top: 14px;">字段</td>
+                            <td>
+                                <select ng-model="searchObject.searchType" class="form-control" ng-disabled="isCollectData">
+                                    <option value="engaddrfullname">英文地址全称</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 14px;">将</td>
+                            <td>
+                                <input type="text" ng-model="searchObject.searchText" ng-trim="false" class="form-control" ng-disabled="isCollectData">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 14px;">替换为</td>
+                            <td>
+                                <input type="text" ng-model="searchObject.replaceText" ng-trim="false" class="form-control" ng-disabled="isCollectData">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-gap my-btn-primary"  ng-click="nextLine();">下一行</button>
+                    <button type="button" class="btn btn-gap my-btn-success" ng-click="doReplace();">替换</button>
+                    <button type="button" class="btn btn-gap my-btn-success" ng-click="doReplaceAll();">全部替换</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="showLoading.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>
+</div>

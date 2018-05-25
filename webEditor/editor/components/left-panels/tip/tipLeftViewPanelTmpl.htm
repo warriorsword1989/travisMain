@@ -1,0 +1,63 @@
+<style>
+    .my-panel-line {
+        padding-left: 10px;
+        padding-right: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .my-panel-line .tools {
+        display: flex;
+        align-items: center;
+    }
+    .my-panel-line .tools > *:not(:first-child) {
+        margin-left: 10px;
+    }
+</style>
+
+<div class="roadLeftPanel_container" ng-controller="TipLeftViewPanelCtrl">
+    <div class="roadLeftPanel">
+        <div class="roadLeftPanel_line my-panel-line">
+            <div>
+                Tips信息
+            </div>
+            <div class="tools" ng-show="!isQuality">
+                <!--2017.06.02 王涵说，‘一键录入’按钮，只在 “种别#1201” 和 “测线#2001” 时显示; 同时为 selectedTipStatus 选择框增加 float 样式控制-->
+                <img ng-click="doKeyEntry()" ng-if="(selectedTip.code === '1201' || selectedTip.code === '2001' )" src="../../images/newRoad/leftPanelIcon/icon_keyEntry_normal.png" style="margin: 0px 10px 4px 10px;"/>
+                <select class="fm-control" ng-change="changeStatus()" ng-model="selectedTipStatus" ng-options="item.id as item.name for item in tipStatusList" style="width: 70px;height: 20px;line-height: 18px;background-color: #fff;">
+                </select>
+            </div>
+            <div class="tools" ng-show="isQuality">
+                <button class="btn-quality" ng-click="enterError();">
+                    错误录入
+                </button>
+                <select class="fm-control" ng-change="changeQuaStatus(selectedTipStatus)" ng-model="selectedTipStatus" ng-options="item.id as item.name for item in quaStatusList" style="width: 70px;height: 20px;line-height: 18px;background-color: #fff;">
+                </select>
+            </div>
+        </div>
+        <div class="roadLeftPanel_line" style="background-color: #eff0fe;">
+            <select class="fm-control" ng-change="getTipList()" ng-model="selectedTipCode" ng-options="item.code as item.name for item in tipTypeList" style="width: 140px;">
+            </select>
+            <select class="fm-control" ng-change="selectTip()" ng-model="selectedTipRowkey" ng-options="item.rowkey as item.name for item in tipList" style="width: 140px;">
+            </select>
+        </div>
+    </div>
+    <div ng-include="tipLeftViewTmpl" style="height: 100%">
+    </div>
+    <div class="fm-modal" drag="" ng-show="quaModal">
+        <div drag-handle="" style="height: 40px;width: 100%;background-color: #685dff;cursor: pointer;padding: 10px;">
+            <div>
+                <span style="color: white;font-size: 14px;font-weight: bold;padding:0 4px;">
+                    错误录入
+                </span>
+                <button class="close pull-right" ng-click="closeQuaModal()" style="padding:0 4px;font-size:28px;color:white;opacity:1; margin-top: -5px;" title="关闭" type="button">
+                    <span>
+                        ×
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="content" ng-include="quaModalTpl">
+        </div>
+    </div>
+</div>

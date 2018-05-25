@@ -1,0 +1,21 @@
+<div ng-controller="leftTipsListPanelCtrl">
+    <div class="table-search">
+        <input type="text" class="table-search-text" ng-model="searchText" placeholder="请输入Tips类型" ng-change="doSearchTips(searchText)">
+        <div class="search-icon" ng-click="searchContent();" title="搜索"></div>
+    </div>
+    <div class="tips-tree scroll_style">
+        <div class="load-tip-tree" ng-if="showTreeLoading">加载中...</div>
+        <div class="tips-group" ng-repeat="item in tipTreeData" ng-show="item.show && !showTreeLoading">
+            <div class="tips-parent" ng-click="showTipGroup($index);">
+                <div class="expand-icon" ng-class="{'expand-icon': true, 'active': item.flag}"></div>
+                <div class="tip-name">{{item.name}}</div>
+                <div class="tips-count">{{item.total}}</div>
+            </div>
+            <div class="load-tip-detail" ng-if="item.loading">加载中...</div>
+            <div class="tips-child" ng-show="item.flag && !item.loading" ng-click="showTips(child);" ng-repeat="child in item.childs" title="{{child.m.e}}">
+                {{child.m.e?child.m.e:'未命名'}}
+            </div>
+        </div>
+    </div>
+    <div class="tips-bottom">共 <span class="total-count">{{tipTreeData.length}}</span> 类 <span class="total-count">{{allTipsCount}}</span> 个Tips</div>
+</div>

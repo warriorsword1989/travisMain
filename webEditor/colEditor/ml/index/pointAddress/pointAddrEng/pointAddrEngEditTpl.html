@@ -1,0 +1,23 @@
+<div ng-controller="engAddressEditCtrl">
+    <div style="padding: 10px" class="fm-edit-table">
+        <div class="fm-panel">
+            <div class="fm-panel-heading">
+                <span>{{main.selectedItem.name}}</span>
+            </div>
+            <div class="fm-panel-body engAddressTable" ng-style="panelBodyHight" style="padding-bottom: 0px;">
+                <div
+                        ui-grid="editGridOptions"
+                        ui-grid-selection
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        class="fm-grid col-grid purple" ng-style="tableBodyHeight">
+                    <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+                </div>
+            </div>
+            <div class="fm-panel-footer" style="text-align: right">
+                <button type="button" class="btn btn-gap my-btn-primary" ng-click="doSave();">保 存</button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="showLoading.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>
+</div>

@@ -1,0 +1,11 @@
+<div style="min-width: 280px!important;max-height: 350px" class="fm-scroll popover related-poi-popover" tabindex="-1">
+    <div class="popover-content">
+        <ul class="related-poi-list">
+            <li ng-repeat="rec in row.refFeatures" ng-click="showPoi(rec)">
+                <span ng-bind="$index + 1" style="width: 20px;"></span>
+                <span ng-bind="rec.pid" style="width: 70px;"></span>
+                <span ng-bind="rec.name?rec.name:'无'" style="width: 120px;"></span>
+            </li>
+        </ul>
+    </div>
+</div>

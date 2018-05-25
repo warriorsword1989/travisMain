@@ -1,0 +1,47 @@
+<style>
+    .list-title-container .list-tab-type .columnSettings{
+        width: 24px;
+        border: 0 none !important;
+        background: url(../../images/png/button_settings_normal.png) center no-repeat;
+    }
+</style>
+<div ng-controller="deepInfoListCtrl" style="height: 100%;">
+    <div class="list-title-container" ng-style="listTitleContainerStyle">
+        <div class="list-title">
+            <select class="selected-addon roadLeftPanel_select select-list-type" disabled>
+                <option value="poi">POI</option>
+            </select>
+            <div ng-click="applyData()" ng-if="!subQuality" class="list-title-btn">
+                <span style="color: #182848">申请数据</span>
+            </div>
+            <div ng-click="extractData()" ng-if="subQuality" class="list-title-btn">
+                <span style="color: #182848">抽取数据</span>
+            </div>
+            <div class="table-search-full" ng-show="leftPanelFull">
+                <input type="text" class="table-search-text" ng-model="searchParText" placeholder="请输入POI名称" ng-keypress="doSearchParPoiList($event)">
+                <div class="search-icon-full" ng-click="searchParContent();" title="搜索"></div>
+            </div>
+        </div>
+        <div class="list-tab-type" style="line-height: 30px">
+            <div class="list-tab-title">
+                <div ng-class="{'list-tab-name': true, 'active': activeType == item.id}" ng-click="changeType(item.id);" ng-repeat="item in tabNames">
+                    {{item.name}}
+                </div>
+            </div>
+            <!--表头自定义列显示控制部分-->
+            <div ng-show="leftPanelFull" auto-close="outsideClick" style="margin-right: 10px; margin-top: 3px;" class="btn-group dropdown pull-right" uib-dropdown>
+                <button class="fm-control dropdown-toggle columnSettings" title="自定义列" type="button" uib-dropdown-toggle=""></button>
+                <ul class="dropdown-menu dropdown-menu-right fm-scroll" style="height:340px;padding-top:0" uib-dropdown-menu>
+                    <li ng-repeat="col in childScope.gridOptions.columnDefs">
+                        <input class="fm-control blue" id="col-switch-{{$index}}" ng-model="col.visible" type="checkbox" ng-click="toggleVisible()" />
+                        <label for="col-switch-{{$index}}">
+                            {{col.displayName}}
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <!--表头自定义列显示控制部分-->
+        </div>
+    </div>
+    <div class="list-content" ng-include="loadDeepTableTpl"></div>
+</div>

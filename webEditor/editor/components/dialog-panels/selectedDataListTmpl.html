@@ -1,0 +1,34 @@
+<style>
+    .selectedDataList {
+        width: 200px;
+        max-height: 200px;
+        background: #fff;
+        border-radius: 3px;
+        box-shadow: 0 0 10px #93bbff;
+    }
+
+    .selectedDataList ul {
+        list-style: none;
+        padding: 10px;
+        margin: 0px;
+        font-size: 0px;
+    }
+
+    .selectedDataList ul > li {
+        height: 22px;
+        line-height: 22px;
+    }
+
+    .selectedDataList ul > li > a {
+        font-size: 12px;
+    }
+</style>
+<div class="selectedDataList fm-scroll" ng-controller="SelectedDataListCtrl">
+    <ul ng-if="dataList.length">
+        <li ng-repeat="item in dataList">
+            <a href="javascript:void(0);" ng-mouseleave="featureMouseleave();" ng-mouseenter="featureMouseenter(item);" ng-click="selectData(item)" style="white-space: nowrap;">
+                <span ng-bind="getName(item)"></span>-<span ng-bind="item.pid"></span>
+            </a>
+        </li>
+    </ul>
+</div>

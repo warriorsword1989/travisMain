@@ -1,0 +1,261 @@
+<link href="../../scripts/libs/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/angular-chosen/chosen.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/select2/css/select2.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/z-tree/css/zTreeStyle.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/angular-tree-control/tree-control.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/angularjs/w5c-validator/style.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/editor.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/pager.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/webEditor/editor-poi.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/webEditor/editor-road.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/webEditor/float-menu.css" rel="stylesheet" type="text/css"/>
+<style>
+    .map-container {
+        height: 100%;
+        width: 100%;
+        background-color: #f7f5f5;
+    }
+    .left-panel-open {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        box-shadow: 0 0 10px #c8ccd4;
+        cursor: pointer;
+    }
+    .btn-not-allow{
+        cursor: not-allowed !important;
+    }
+    .left-panel-hide {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+    }
+    .right-panel-open {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        box-shadow: 0 0 10px #c8ccd4;
+        cursor: pointer;
+    }
+    .right-panel-hide {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        cursor: pointer;
+    }
+    .userToolbar {
+        position: absolute;
+        top: 10px;
+        text-align: center;
+        padding-bottom: 10px;
+        z-index: 10;
+        cursor: not-allowed;
+    }
+    .userToolbar > div > div {
+        box-shadow: 0 0 10px #93bbff;
+        /*border-radius: 15px;*/
+        height: 30px;
+        width: 30px;
+        background: url("../../images/newPoi/toolIcon/menu_normal.png") no-repeat center center;
+    }
+    .taskToolbar {
+        box-shadow: 0 0 10px #93bbff;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        position: absolute;
+        top: 50px;
+    }
+    .taskToolbar > div{
+        width: 100%;
+        height: 100%;
+        background: url("../../images/newPoi/toolIcon/taskList-normal.png") no-repeat center center;
+    }
+    .taskToolbar:hover > div {
+        background: url("../../images/newPoi/toolIcon/taskList-active.png") no-repeat center center;
+    }
+    .mapToolbar {
+        position: absolute;
+        top: 50%;
+        margin-top: -184px;
+        z-index: 8;
+    }
+    .poiToolbar {
+        cursor: pointer;
+        position: absolute;
+        bottom: 50px;
+    }
+    .sceneToolbar {
+        border-radius: 3px;
+        box-shadow: 0 0 10px #93bbff;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        position: absolute;
+        bottom: 10px;
+    }
+    .sceneToolbar > div{
+        width: 100%;
+        height: 100%;
+        background: url("../../images/newPoi/toolIcon/button_changjing_normal.png") no-repeat center center;
+    }
+    .sceneToolbar:hover > div {
+        background: url("../../images/newPoi/toolIcon/button_changjing_active.png") no-repeat center center;
+    }
+    .mapZoomBar {
+        position: absolute;
+        bottom: 10px;
+        right: 60px;
+    }
+    .searchToolBar {
+        position: absolute;
+        width: 250px;
+        height: 30px;
+        top: 10px;
+        z-index: 9;
+    }
+    .dataListPanel {
+        position: absolute;
+        top: 50px;
+        width: auto;
+        height: auto;
+        /*z-index: 10;*/
+    }
+    .editToolBar {
+        top: 50%;
+        height: 0;
+        position: absolute;
+        margin-top: -164px;
+        z-index: 7;
+    }
+    .shapeEditPanel {
+        position: absolute;
+        top: 50px;
+        width: auto;
+        height: auto;
+    }
+    .right-float-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .thematicFigureBar {
+        width: 150px;
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+    }
+</style>
+<script src="config/SymbolsFile.js"></script>
+<script src="config/ReferenceLayers.js"></script>
+<script src="config/FeatureLayers.js"></script>
+<script src="config/TipLayers.js"></script>
+<script src="config/ThematicLayers.js"></script>
+<script src="config/Scenes.js"></script>
+<script src="config/SourceConfig.js"></script>
+<div class="mapwapper" id="mainEditor" style="height: 100%;position: relative;overflow: hidden;">
+    <div ng-controller="mainMapHisCtrl" style="height: 100%;">
+        <div class="map-container" id="editorMap">
+            <div class="mapZoomBar" ng-style="{'right':rightPanelOpened ? 360 : 60}">
+                缩放等级：
+                <span ng-bind="zoom">
+                </span>
+            </div>
+        </div>
+        <!--右侧工具条 地图操作按钮-->
+        <div class="mapToolbar" ng-include="mapToolbarTmpl" ng-style="{'right':rightPanelOpened ? 310 : 10}">
+        </div>
+        <div class="fm-layout-container right" ng-show="mapToolbarPanelFlag" style="z-index: 10;">
+            <div ng-include="mapToolbarPanelTmpl">
+            </div>
+        </div>
+        <div class="tooltipclass" id="tooltip">
+        </div>
+    </div>
+    <!--左侧弹出栏-->
+    <div class="fm-layout-container left" ng-show="leftPanelFlag">
+        <div ng-include="leftPanelTmpl">
+        </div>
+        <img class="left-panel-hide" ng-click="hideLeftPanel()" src="../../images/newPoi/leftPanelIcon/icon-back-left.png"/>
+    </div>
+    <img class="left-panel-open" ng-click="showLeftPanelSwitch()" ng-if="leftPanelTmpl || leftAdvanceSearchPanelTmpl" src="../../images/newPoi/toolIcon/button-open-left.png"/>
+    <img class="left-panel-open btn-not-allow" ng-if="!leftPanelTmpl && !leftAdvanceSearchPanelTmpl" src="../../images/newPoi/toolIcon/button-left-expand.png"/>
+    <!--左侧浮动信息面板-->
+    <div class="fm-layout-container left" ng-show="leftFloatPanelFlag">
+        <div ng-include="leftFloatPanelTmpl">
+        </div>
+        <a class="fm-container-close" href="javascript:void(0);" ng-click="closeLeftFloatPanel()">
+        </a>
+    </div>
+    <!--左侧高级搜索面板-->
+    <div class="fm-layout-container left" ng-show="leftAdvanceSearchPanelFlag">
+        <div ng-include="leftAdvanceSearchPanelTmpl">
+        </div>
+    </div>
+    <!--左侧TIPS和poi信息面板-->
+    <div class="fm-layout-container left" ng-show="leftListPanelFlag" ng-style="leftContainerStyle" style="width: 300px;">
+        <div class="left-list-panel" ng-include="leftListPanelTmpl" ng-style="leftListStyle">
+        </div>
+        <a class="fm-container-close left-panel-close" href="javascript:void(0);" ng-click="closeLeftListPanel()">
+        </a>
+    </div>
+    <!--右侧工具条 用户-->
+    <div class="userToolbar" ng-style="{'right':rightPanelOpened ? 310 : 50}">
+        <div><div></div></div>
+    </div>
+    <!--操作按钮栏-->
+    <div class="editToolBar" ng-include="editToolTmpl" ng-style="{'right':mapToolbarPanelFlag ? 400 : rightPanelOpened ? 360 : 60}">
+    </div>
+    <!--搜索框-->
+    <div class="searchToolBar" ng-include="searchToolTmpl" ng-style="{'right':rightPanelOpened ? 348 : 90}">
+    </div>
+    <div class="dataListPanel" ng-include="selectedDataListTmpl" ng-show="selectedDataListFlag" ng-style="{'right':rightPanelOpened ? 360 : 60}">
+    </div>
+    <!--右侧工具条 任务 -->
+    <!--<div class="taskToolbar" ng-click="openTaskList()" ng-style="{'right':rightPanelOpened ? 310 : 10}">-->
+        <!--<div title="子任务详细信息">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--右侧工具条 poi分页-->
+    <div class="poiToolbar" ng-include="rightPoiToolTmpl" ng-style="{'right':rightPanelOpened ? 310 : 10}">
+    </div>
+    <!--右侧工具条 场景-->
+    <div class="sceneToolbar" ng-show="sceneToolFlag" ng-click="openScenePanel('ScenePanel')" ng-style="{'right':rightPanelOpened ? 310 : 10}">
+        <div>
+        </div>
+    </div>
+    <!--右侧属性编辑面板-->
+    <div class="fm-layout-container right" ng-show="rightPanelFlag">
+        <div ng-include="rightPanelTmpl">
+        </div>
+        <img class="right-panel-hide" ng-click="hideRightPanel()" src="../../images/newPoi/leftPanelIcon/icon-back-right.png"/>
+    </div>
+    <img class="right-panel-open" ng-click="showRightPanel()" ng-if="!rightPanelFlag && rightPanelTmpl" src="../../images/newPoi/toolIcon/button-open-right.png"/>
+    <img class="right-panel-open btn-not-allow" ng-if="!rightPanelFlag && !rightPanelTmpl" src="../../images/newPoi/toolIcon/button-right-expand.png"/>
+    <!--右侧浮动信息面板-->
+    <div class="fm-layout-container right" ng-show="rightFloatPanelFlag">
+        <div ng-include="rightFloatPanelTmpl">
+        </div>
+        <img class="right-float-close" ng-click="closeRightFloatPanel()" src="../../images/newPoi/toolIcon/button-close-normal.png"/>
+    </div>
+    <!--质检弹出窗口 -->
+    <div ng-show="showQuality" ng-include="QuaPanelTmpl">
+    </div>
+    <!-- 页面加载中效果 -->
+    <div class="show-animation" ng-include="'./svgLoading.html'" ng-show="loading.flag">
+    </div>
+    <!--专题图图例-->
+    <div class="thematicFigureBar" ng-include="thematicFigureTmpl" ng-show="thematicFigureFlag">
+    </div>
+    <wmwindow ng-repeat="(key, item) in dialogManager" class="fm-wm-window" on-open="openDialog($dlg, key)" on-closed="closeDialog(key)" options="{{item.options}}" maximizable="false" title="{{item.title}}">
+        <div class="fm-stretch" ng-include="item.tmpl">
+        </div>
+    </wmwindow>
+</div>

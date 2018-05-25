@@ -1,0 +1,69 @@
+<style>
+    .thematicFigurePanel {
+        box-shadow: 0 0 10px #93bbff;
+        background-color: #ffffff;
+    }
+    .thematicFigurePanel span.dotContent{
+        max-width: 100px;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+    .thematicFigurePanel span.sub-tree{
+        padding-left: 22px;
+    }
+    .thematicFigurePanel ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+    .thematicFigurePanel ul li {
+        height: 30px;
+        line-height: 28px;
+        padding: 0 10px;
+        color: #182848;
+        border: 1px solid transparent;
+    }
+    .thematicFigurePanel ul li:hover {
+        border: 1px solid #5896ff;
+        background-color: rgba(88, 150, 255, 0.1);
+    }
+    .thematicFigurePanel ul .figure {
+        width: 12px;
+        height: 12px;
+        float: right;
+        margin: 8px 0;
+    }
+    .thematicFigurePanel ul span.figure {
+        border-radius: 3px;
+    }
+    .thematicFigurePanel .bottomFigure{
+        height: 30px;
+        line-height: 30px;
+        padding-left: 10px;
+        border-top: 1px solid #d2e1ff;
+        font-size: 12px;
+        cursor: pointer;
+        color: #5896ff;
+    }
+    .thematicFigurePanel .bottomFigure span.arrow {
+        width: 30px;
+        text-align: center;
+        border-left: 1px solid #d2e1ff;
+        float: right;
+    }
+</style>
+<div class="thematicFigurePanel" ng-controller="thematicFigureCtrl">
+    <div class="fm-scroll" style="max-height: 300px;" ng-show="expandFlag">
+        <ul>
+            <li ng-repeat="item in figures">
+                <span class="fm-ellipsis dotContent" title="{{item.label}}" ng-class="{true: 'sub-tree'}[item.indentation]">{{item.label}}</span>
+                <span class="figure" ng-style="{'background-color': item.color}" ng-if="!item.img"></span>
+                <img class="figure" ng-src="{{'../../images/webEditor/thematicFigure/' + item.img}}" ng-if="item.img">
+            </li>
+        </ul>
+    </div>
+    <div class="bottomFigure" ng-click="showFigure()">
+        <span title="{{sceneName}}" class="fm-ellipsis dotContent" ng-style="{'opacity': expandFlag ? 1 : 0.5}">{{sceneName}}</span>
+        <span class="arrow"><img ng-src="{{arrowImg}}"></span>
+    </div>
+</div>

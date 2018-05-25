@@ -1,0 +1,23 @@
+<div class="fm-stretch" ng-controller="DialogPanelCtrl">
+    <!--可拖动的弹出窗口 -->
+    <!-- <div class="fm-dialog" ng-style="{'left': PageViewPoint.x - 300, 'top': PageViewPoint.y}" drag ng-show="!dialogMiniFlag">
+        <div class="tools">
+            <img src="../../images/webEditor/dialog/mini.png" class="img-btn" ng-click="toggleMini()" title="最小化">
+            <img src="../../images/webEditor/dialog/close.png" class="img-btn" ng-click="closeDialog()" title="关 闭">
+        </div> -->
+    <div class="fm-stretch" ng-include="dialogTmpl">
+    </div>
+    <!-- </div> -->
+    <!-- <div class="fm-dialog-mini" ng-if="dialogMiniFlag" ng-style="{'top': PageViewPoint.y*2 - 30}" drag drag-handle>
+        <div class="title" ng-bind="dialogName">
+        </div>
+        <div class="tools">
+            <span ng-click="toggleMini()" title="最大化">
+            <img src="../../images/webEditor/dialog/maxi.png">
+            </span>
+            <span ng-click="closeDialog()" title="关 闭">
+            <img src="../../images/webEditor/dialog/close.png">
+            </span>
+        </div>
+    </div> -->
+</div>

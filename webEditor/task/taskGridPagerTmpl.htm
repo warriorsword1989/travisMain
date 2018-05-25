@@ -1,0 +1,17 @@
+<div class="ng-cloak fm-grid-pager task-pager" ng-controller="TaskGridPagerCtrl" ui-grid-pager="">
+    <div class="total pager-content">
+        共 <span ng-bind="grid.options.totalItems"></span> 个子任务
+    </div>
+    <div class="count pager-content" ng-if="grid.options.paginationPageSizes.length">
+        每页 <select class="fm-control" ng-model="grid.options.paginationPageSize" ng-options="count for count in grid.options.paginationPageSizes"></select> 条
+    </div>
+    <div class="page task-page pager-content">
+        <div class="btn-page-container" ng-class="{'disabled': !page.active && !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type">
+            <a href="javascript:void(0);" class="btn-page" ng-click="paginationApi.seek(page.number)" ng-switch-when="first">首页</a>
+            <a href="javascript:void(0);" class="btn-page" ng-click="paginationApi.seek(page.number)" ng-switch-when="prev">上一页</a>
+            <div class="btn-page" ng-switch-when="prev">{{currentPage}} / {{pageTotal}}</div>
+            <a href="javascript:void(0);" class="btn-page" ng-click="paginationApi.seek(page.number)" ng-switch-when="next">下一页</a>
+            <a href="javascript:void(0);" class="btn-page" ng-click="paginationApi.seek(page.number)" ng-switch-when="last">尾页</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="../../styles/webEditor/deepInfo.css">
+<div class="table_div scroll-styled scrollDiy" ng-controller="deepInfoTableCtrl">
+    <div class="btn-group btn-group-justified" role="group" style="padding-top: 20px;padding-bottom:0px;width: 400px">
+        <div class="btn-group" role="group">
+            <button style="border-radius: 14px 14px 0px 0px;outline: none;" class="btn" ng-class="{1: 'btn-success',2:'btn-default'}[dataListType]" ng-click="changeDataList(1)">待作业
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button style="border-radius: 14px 14px 0px 0px;;outline: none;" class="btn" ng-class="{2: 'btn-success', 1: 'btn-default'}[dataListType]" ng-click="changeDataList(2)">待提交
+            </button>
+        </div>
+    </div>
+    <div class="content" style="background-color: #ffffff;border-top: 1px solid #6eb9ff" ng-style="tableHeight">
+        <div >
+            <div class="pull-left" style="padding: 10px;">
+                <button type="button" class="btn btn-info" ng-style="{'display':{true:'inline',false:'none'}[dataListType==1]}" ng-click="applyData();">申请数据</button>
+                <button type="button" class="btn btn-warning" ng-click="checkData()">在线检查</button>
+                <button type="button" class="btn btn-primary" ng-style="{'display':{true:'inline',false:'none'}[dataListType==2]}" ng-click="submitDeepData();">提交数据</button>
+            </div>
+            <div class="pull-right" style="padding: 10px; color: black;">
+                <input type="text" class="search" ng-model="searchText" placeholder="名称"/>
+                <div class="btn-group dropdown" uib-dropdown on-toggle="toggled(open)" auto-close="outsideClick">
+                    <button type="button" style="background-color:#EFF0FE;" class="btn dropdown-toggle btn-sm" uib-dropdown-toggle aria-haspopup="true" aria-expanded="true">
+                        <i class="glyphicon glyphicon-th icon-th"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                        <li ng-repeat="col in cols">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" ng-model-options="{getterSetter: true}" ng-model="col.show"/> {{col.title}}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table ng-table-dynamic="tableParams with cols" class="table table-condensed table-bordered table-striped">
+                <colgroup >
+                    <col ng-repeat="col in cols | filter:{show: true}"  width="{{col.width || '400'}}"/>
+                </colgroup>
+                <tr ng-repeat="row in $data" ng-dblclick="showDetail(row)">
+                    <td ng-repeat="col in $columns" ng-switch="col.field">
+                        <span ng-if="!col.html" ng-bind-html="col.getValue?col.getValue(this,row):row[col.field]"></span>
+                        <span ng-if="col.html" fm-bind-compiled-html="col.getValue(this, row)"></span>
+                    </td>
+                </tr>
+                <tr class="text-center" ng-show="!$data.length"><td colspan="{{(cols | filter: {show: true}).length}}" ng-bind="poiListTableMsg"></td></tr>
+            </table>
+        </div>
+    </div>
+    <div ng-show="showLoadingSVG.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>
+</div>

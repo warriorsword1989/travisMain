@@ -1,0 +1,12 @@
+<div class="fm-panel" ng-controller="TipRightEditPanelCtrl">
+    <div class="header">
+        <div class="title" style="margin-left: 30px;">
+            <strong class="fm-ellipsis" style="max-width: 80px;display: inline-block" ng-bind="objectName"></strong>
+        </div>
+        <div class="toolbar">
+            <img class="flat-btn" src="../../images/newPoi/rightPanelIcon/icon-save.png" ng-click="doSave()">
+            <!--<img class="flat-btn" src="../../images/newPoi/rightPanelIcon/icon-delete.png" ng-click="doDelete()">-->
+        </div>
+    </div>
+    <div class="content" ng-include="tipEditTmpl"></div>
+</div>

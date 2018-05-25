@@ -1,0 +1,221 @@
+<style>
+    .map-toolbar {
+        font-size: 0px;  /*去掉div之间的空隙，注意在子要素中进行覆盖*/
+        background-color: #ffffff;
+        box-shadow: 0 0 10px #93bbff;
+        overflow: auto;
+    }
+    .map-toolbar .tools-switch {
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+    }
+    .map-toolbar .tools-switch:not(.disabled):hover, .tools-switch:not(.disabled).active {
+        background-color:  rgba(88, 150, 255, 0.1);
+    }
+    .map-toolbar .tools-switch.disabled {
+        cursor: default;
+    }
+    .map-toolbar .tools-switch.bottom {
+        width: 40px;
+        display: inline-block;
+        float: left;
+    }
+    .map-toolbar ul.tools-ul {
+        display: inline-block;
+        width: 40px;
+        margin-bottom: 0;
+        text-align: center;
+        border-radius: 3px;
+        box-shadow: none;
+        vertical-align: top;
+    }
+    .map-toolbar ul.tools-ul > li {
+        border-bottom: 1px solid #d2e1ff;
+        list-style: none;
+        background-color: #ffffff;
+        font-size: 12px;
+        height: 30px;
+        padding: 5px;
+        color: #182848;
+    }
+    .map-toolbar ul.tools-ul.right > li {
+        border-left: 1px solid #d2e1ff;
+    }
+    .map-toolbar ul.tools-ul > li:first-child {
+        border-top: 1px solid #d2e1ff;
+    }
+    .map-toolbar ul.tools-ul > li.tool {
+        cursor: pointer;
+    }
+    .map-toolbar ul.tools-ul > li.tool:hover {
+        background-color:  rgba(88, 150, 255, 0.1);
+    }
+    /*.map-toolbar ul.tools-ul > li > span {
+        font-size: 12px;
+    }*/
+    .map-toolbar ul.tools-ul > li.active {
+        background-color:  rgba(88, 150, 255, 0.1);
+        overflow: hidden;
+    }
+    .map-toolbar ul.tools-ul > li .batchIcon {
+        height: 0;
+        width: 0;
+        position: absolute;
+        top: 41px;
+        left: 32px;
+        border-left: 8px solid transparent;
+        border-bottom: 8px solid #636ef5;
+    }
+    .select-tool .popover{
+        top: 20px !important;
+        margin-left: -1px !important;
+        width: 100px;
+        padding: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        border: 0;
+        box-shadow: 0 0 10px 1px #93bbff;
+    }
+    .select-tool .popover.popoverBatch {
+        top: 80px !important;
+    }
+    .hide-tool-normal{
+        width: 40px;
+        height: 20px;
+        background: url(../../images/newPoi/toolIcon/hide-tool-normal.png) no-repeat center;
+    }
+    .open-tool-normal{
+        width: 40px;
+        height: 20px;
+        background: url(../../images/newPoi/toolIcon/open-tool-normal.png) no-repeat center;
+    }
+    .open-tool-normal:hover{
+        background: url(../../images/newPoi/toolIcon/open-tool-active.png) no-repeat center;
+    }
+    .tools-switch-icon{
+        width: 40px;
+        height: 20px;
+        background: url(../../images/webEditor/map-toolbar/switch.png) no-repeat center;
+    }
+    .btn-not-allowed{
+        cursor: not-allowed;
+    }
+    .tools-switch-icon-disabled:hover{
+        background: url(../../images/webEditor/map-toolbar/switch-active.png) no-repeat center;
+    }
+</style>
+<div class="map-toolbar" ng-controller="MapToolbarCtrl">
+    <div class="tools-switch" title="{{allToolsFlag ? '关闭' : '打开'}}工具面板" ng-click="toggleAllTools()">
+        <div ng-class="{true: 'hide-tool-normal', false: 'open-tool-normal'}[allToolsFlag]"></div>
+    </div>
+    <ul class="list-group tools-ul select-tool" ng-show="allRecentToolsFlag || (pageFlag === 1)">
+        <li class="tool" ng-if="defaultSelectTool.type.split('-')[0] != 'SELECT'" ng-class="{'active': selectTool.name===defaultSelectTool.type}" title="{{defaultSelectTool.title}}" ng-controller='startEditCtrl' ng-click="batchSelect($event, defaultSelectTool.geo , defaultSelectTool.event)"
+            data-animation="am-flip-x"
+            data-auto-close="1"
+            data-trigger="contextmenu"
+            data-content="select"
+            bs-popover
+            data-placement="left"
+            data-template-url="@components/tools/tpls/toolbar-map/startBatchEditTpl.html" style="overflow: hidden">
+            <img ng-src="../../images/newPoi/toolIcon/quickToolIcon/{{defaultSelectTool.img}}.png">
+            <div class="batchIcon" style="bottom: 3px;"></div>
+        </li>
+        <li class="tool" ng-if="defaultSelectTool.type.split('-')[0] === 'SELECT'" ng-class="{'active': selectTool.name===defaultSelectTool.type}" title="{{defaultSelectTool.title}}" ng-controller='startEditCtrl' ng-click="select($event, defaultSelectTool.geo , defaultSelectTool.event)"
+            data-animation="am-flip-x"
+            data-auto-close="1"
+            data-trigger="contextmenu"
+            data-content="select"
+            bs-popover
+            data-placement="left"
+            data-template-url="@components/tools/tpls/toolbar-map/startBatchEditTpl.html" >
+            <img ng-src="../../images/newPoi/toolIcon/quickToolIcon/{{defaultSelectTool.img}}.png">
+            <div class="batchIcon"></div>
+        </li>
+        <li class="tool" ng-class="{'active': selectTool.name==='PAN'}" title="地图漫游" ng-controller='startEditCtrl' ng-click="pan($event, null)">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/mapPan.png">
+        </li>
+        <!--<li class="tool" ng-if="taskType === 3 || taskType === 4" ng-class="{'active': selectTool.name===defaultBatchSelectTool.type}" title="{{defaultBatchSelectTool.title}}" ng-controller='startEditCtrl' ng-click="batchSelect($event, defaultBatchSelectTool.geo, defaultBatchSelectTool.event)"-->
+            <!--data-animation="am-flip-x"-->
+            <!--data-auto-close="1"-->
+            <!--data-trigger="contextmenu"-->
+            <!--data-content="batchSelect"-->
+            <!--bs-popover-->
+            <!--data-placement="left"-->
+            <!--data-template-url="@components/tools/tpls/toolbar-map/startBatchEditTpl.html" >-->
+            <!--<img ng-src="../../images/newPoi/toolIcon/quickToolIcon/{{defaultBatchSelectTool.img}}.png">-->
+            <!--<div class="batchIcon" style="top: 101px;"></div>-->
+        <!--</li>-->
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+    </ul>
+    <ul class="list-group tools-ul right" ng-show="allRecentToolsFlag || (pageFlag === 2)">
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+        <li class="add" title="添加快捷工具">
+            <img src="../../images/newPoi/toolIcon/quickToolIcon/newTool.png">
+        </li>
+    </ul>
+    <div>
+        <div class="tools-switch bottom" ng-class="{true: 'disabled'}[allRecentToolsFlag]" ng-click="switchPage()">
+            <img ng-show="!allRecentToolsFlag && pageFlag === 2" ng-src="../../images/webEditor/map-toolbar/switch-active.png">
+            <img ng-show="allRecentToolsFlag && pageFlag === 1" class="btn-not-allowed" ng-src="../../images/webEditor/map-toolbar/switch-active.png">
+            <div ng-show="!allRecentToolsFlag && pageFlag === 1" class="tools-switch-icon tools-switch-icon-disabled"></div>
+        </div>
+        <div class="tools-switch bottom" ng-class="{true: 'active'}[editToolsFlag]" ng-click="toggleEditTools()" ng-if="allRecentToolsFlag">
+            <img src="../../images/webEditor/map-toolbar/setting-active.png">
+        </div>
+    </div>
+</div>

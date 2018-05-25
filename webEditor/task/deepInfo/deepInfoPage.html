@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../../styles/webEditor/deepInfo.css">
+<div class="deepLeft_container">
+    <div class="deepLeft_div">
+        <div class="deep_title" style="border-bottom: 1px solid rgba(255, 255, 255, .1)">
+            <span style="float: left;cursor: pointer;font-size: 20px;padding: 12px;" class="glyphicon glyphicon-chevron-left" title="返回" ng-click="backToPre()"></span>
+            <span style="margin-left: 50px">{{userName}}</span>
+            <span style="float: right;cursor: pointer;font-size: 20px;padding: 12px;" class="glyphicon glyphicon-log-out" title="退出" ng-click="logout()"></span>
+        </div>
+        <div style="border-bottom: 1px solid rgba(255, 255, 255, .1)">
+            <div class="deep_subTitle">
+                <div style="margin-left: 15px;">
+                    <span>数据概况</span>
+                </div>
+            </div>
+            <div ng-style="{'display': 'block'}">
+                <ul class="list-group list_item">
+                    <li >
+                        <div>
+                            <span>深度信息-{{taskDesc.name}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid rgba(255, 255, 255, .1)">
+            <div class="deep_subTitle">
+                <div style="margin-left: 15px;">
+                    <span>作业进展</span>
+                </div>
+            </div>
+            <div ng-style="{'display':'block'}">
+                <ul class="list-group list_item">
+                    <li>
+                        <div>
+                            <span>室内待作业 {{taskDesc.undoNum}} 条</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span>室内待提交 {{taskDesc.doneNum}} 条</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-include="deepTablUrl" style="height: 100%"></div>
+</div>
+<div ng-show="showLoading.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>

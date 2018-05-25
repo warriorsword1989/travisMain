@@ -1,0 +1,73 @@
+<div ng-controller="pointAddrEngCtrl">
+    <div class="col-title">
+        <div class="title">{{subtaskName}}-{{qcWorkType}}</div>
+        <div class="fm-backMenu" ng-click="backToPre()"></div>
+    </div>
+    <div class="dataListPage">
+        <script type="text/ng-template" id="headerCheckboxId">
+            <input type="checkbox" ng-model="tableParams.checkedAll" ng-click="selectAllData();" class="select-all" />
+        </script>
+        <div style="padding-left: 20px;padding-top: 10px;">
+            <label class="label-group-menu" ng-class="{1: 'active'}[dataListType]" ng-click="changeDataList(1)">待作业</label>
+            <label class="label-group-menu" ng-class="{2: 'active'}[dataListType]" ng-click="changeDataList(2)">待提交</label>
+        </div>
+        <div class="content">
+            <div>
+                <script type="text/ng-template" id="myPopoverTemplate.html">
+                    <div class="form-group" ng-repeat="item in costomWorkNumEum">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="selectNum" id="optionsRadios1" ng-checked="costomWorkNum==item.num" ng-click="selectNum(item,$index)"> <span ng-bind="item.desc"></span>
+                            </label>
+                        </div>
+                        <div ng-if="inputIsShow && $last" class="input-group">
+                            <input class="form-control" ng-model="item.num" type="text" />
+						<span class="input-group-btn">
+							<button ng-click="setInputValue(item.num)" class="btn btn-default" type="button">确认</button>
+						</span>
+                        </div>
+                    </div>
+                </script>
+                <div class="pull-left" style="padding: 10px;">
+                    <button type="button" class="btn btn-gap my-btn-primary" ng-click="doRefresh();">刷新</button>
+                    <button type="button" class="btn btn-gap my-btn-success" ng-class="{false:'disabled'}[enableClick]" ng-click="doCheckData();">在线检查</button>
+                    <button type="button" class="btn btn-gap my-btn-warning" ng-show="enableBatch" ng-class="{false:'disabled'}[enableClick]" ng-click="batchWork()">批量作业</button>
+                    <button type="button" class="btn btn-gap my-btn-blue" ng-show="dataListType==2" ng-class="{false:'disabled'}[enableClick]" ng-click="submitData();">提交数据</button>
+                <span tabindex="0" popover-placement="bottom" uib-popover-template="customPopoverUrl" popover-title="每次作业条数:"
+                      popover-trigger="outsideClick" class="glyphicon glyphicon-asterisk cursor-point"></span>
+                    <div class="progress progress-striped fm-progress" >
+                        <div ng-class="['progress-bar', progress.style]" ng-style="{width: progress.value + '%'}">
+                            <div ng-if="false">{{progress.value}}%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right" style="padding: 10px; color: black;">
+                    <input type="text" class="search" ng-model="searchText" placeholder="{{searchPlaceholder}}"/>
+                    <div class="btn-group dropdown" uib-dropdown on-toggle="toggled(open)" auto-close="outsideClick">
+                        <button type="button" style="background-color:#EFF0FE;" class="btn dropdown-toggle btn-sm" uib-dropdown-toggle aria-haspopup="true" aria-expanded="true">
+                            <i class="glyphicon glyphicon-th icon-th"></i> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                            <li ng-repeat="col in gridOptions.columnDefs">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" ng-model-options="{getterSetter: true}" ng-model="col.visible" ng-click="toggleVisible()"/> {{col.displayName}}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:50px 15px 0px 15px;">
+                <div
+                        ui-grid="gridOptions"
+                        ui-grid-selection
+                        ui-grid-pagination
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        class="fm-grid col-grid purple" ng-style="tableBodyHeight">
+                    <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

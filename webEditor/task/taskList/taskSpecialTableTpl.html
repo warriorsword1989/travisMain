@@ -1,0 +1,52 @@
+<style>
+    .taskTable .task-header-select .sortable {
+        display: flex;
+    }
+    .taskTable .task-header-select .sortable .ui-grid-filter-container {
+        width: 80px;
+        padding: 0;
+        margin: 5px 10px 5px -26px;
+    }
+    .taskTable .task-header-select .sortable .ui-grid-filter-container .ui-grid-icon-cancel{
+        right: -13px;
+        display: none;
+    }
+    .taskTable .task-header-select .sortable .ui-grid-filter-container .ui-grid-filter-select{
+        width: 80px;
+        height: 24px;
+        border-radius: 3px;
+        border: solid 1px rgba(99, 110, 245, 0.2);
+        padding-left: 8px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        background: url(../../images/webEditor/task/icon_purplearrow_down.png) no-repeat right center white;
+        background-position-x: 60px;
+        outline: none;
+    }
+    .taskTable .task-header-select .sortable .ui-grid-filter-container .ui-grid-filter-select:focus{
+        box-shadow: none;
+        outline: none;
+    }
+    .taskTable .task-total {
+        cursor: pointer;
+        color: #3399ff;
+        text-decoration: underline;
+    }
+</style>
+<div class="taskList_rightDiv task-list-continer" ng-controller="taskSpeacialTableCtrl">
+    <div class="task-table-title">
+        {{taskTypes[taskType]}}
+    </div>
+    <div ng-cloak class="scroll_style scrollDiy">
+        <div
+                class="fm-grid purple taskTable"
+                ui-grid="gridOptions"
+                ui-grid-auto-resize=""
+                ui-grid-pagination=""
+                ui-grid-resize-columns=""
+                ui-grid-selection=""
+                ng-style="{'height': wHeight - 50, 'width': '100%', 'transition': 'none'}">
+            <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+        </div>
+    </div>
+</div>

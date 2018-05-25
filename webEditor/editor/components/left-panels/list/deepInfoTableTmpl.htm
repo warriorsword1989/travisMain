@@ -1,0 +1,40 @@
+<style>
+    #deepInfoTable {
+        color: #000;
+        height: 100%;
+    }
+    /* poi表格样式 */
+    #deepInfoTable .ui-grid.fm-grid .ui-grid-row {
+        min-width: 300px;
+        border-top: none;
+        border-bottom: none;
+    }
+    #deepInfoTable .ui-grid-row:nth-child(odd) {
+        background: #e6ebf5!important;
+    }
+    #deepInfoTable .ui-grid.fm-grid .ui-grid-row:hover,
+    #deepInfoTable .ui-grid.fm-grid .ui-grid-row:active,
+    #deepInfoTable .ui-grid.fm-grid .ui-grid-row.ui-grid-row-selected {
+        border-top: none;
+        border-bottom: none;
+    }
+    #deepInfoTable .ui-grid-row:nth-child(odd) .ui-grid-cell {
+        background: #e6ebf5;
+    }
+</style>
+<div id="deepInfoTable" ng-controller="deepInfoTableCtrl">
+    <div class="table-search" ng-show="!leftPanelAll">
+        <input type="text" class="table-search-text" ng-model="searchText" placeholder="请输入POI名称" ng-keyup="doSearchPoiList($event)">
+        <div class="search-icon" ng-click="searchContent();" title="搜索"></div>
+    </div>
+    <div ng-cloak ng-if="showTable" ui-grid="gridOptions"
+         ui-grid-selection
+         ui-grid-pagination
+         ui-grid-auto-resize
+         ui-grid-resize-columns
+         ui-grid-move-columns
+         ng-class="{'fm-grid': true, 'tight': !leftPanelAll}" ng-style="{'height': wHeight}">
+        <div ng-show="isLoading" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+    </div>
+    <div class="expandPanel" ng-click="switchFullAndLeft();" ng-style="expandPanelStyle"></div>
+</div>

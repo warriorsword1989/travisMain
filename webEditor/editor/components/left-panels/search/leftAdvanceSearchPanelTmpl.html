@@ -1,0 +1,274 @@
+<style>
+    #advanceSearchLeftContainer {
+        font-size: 12px;
+        width: 300px;
+        height: 100%;
+        position: relative;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel,
+    #advanceSearchLeftContainer .searchResultPanel{
+        height: 100%;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .searchHeader,
+    #advanceSearchLeftContainer .searchResultPanel .searchHeader{
+        height: 40px;
+        padding-left: 10px;
+        background-color: #636ef5;
+        position: relative;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .searchHeader h4,
+    #advanceSearchLeftContainer .searchResultPanel .searchHeader h4 {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        height: 40px;
+        color: #FFFFFF;
+        line-height: 40px;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .searchHeader a.advanceSearchClose {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        transition: all .3s;
+        z-index: 3;
+        background: url(../../images/webEditor/left-panel/icon_close.png) no-repeat center center transparent;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .searchHeader a.advanceSearchClose:hover {
+        transform: rotate(90deg);
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .searchCondition{
+        height: 100%;
+        padding-bottom: 60px;
+        margin-top: -40px;
+        padding-top: 40px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .footer,
+    #advanceSearchLeftContainer .searchResultPanel .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-top: 1px solid #c7c6c6;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .footer .searchToolBtn,
+    #advanceSearchLeftContainer .searchResultPanel .footer .resultToolBtn{
+        width: 105px;
+        margin: 0 20px;
+        color: #fff;
+        background-color: #636ef5;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul {
+        padding: 5px 0 0 5px;
+        margin-bottom: 0px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li {
+        padding: 2px 0;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li.attrCondition .plusButton {
+        position: absolute;
+        right: 5px;;
+        top: 7px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li.attrCondition .listAnimate.ng-enter{
+        height: 0;
+        opacity: 0;
+        transition: all .3s cubic-bezier(.42, 0, 1, 1);
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li.attrCondition .listAnimate.ng-enter-active{
+        height: 30px;
+        opacity: 1;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li.attrCondition .listAnimate.ng-leave {
+        height: 30px;
+        opacity: 1;
+        transition: all .3s cubic-bezier(0, 0, .58, 1);
+    }
+    #advanceSearchLeftContainer .searchConditionPanel form ul li.attrCondition .listAnimate.ng-leave-active {
+        height: 0;
+        opacity: 0;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .advance-search-label {
+        width: 30px;
+        margin-right: 0px;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel select {
+        width: 250px;
+        /*background-position-x: 230px*/
+    }
+    #advanceSearchLeftContainer .searchConditionPanel input {
+        width: 251px;
+        margin-top: 3px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel select {
+        margin-top: 3px;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .typeList {
+        position: relative;
+    }
+    #advanceSearchLeftContainer .searchConditionPanel .typeList .diyTree {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        overflow: auto;
+        left: 34px;
+        top: 28px;
+        width: 250px;
+        max-height: 300px;
+        background-color: #FFFFFF;
+        border: 1px solid #CCCCCC;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList {
+        position: absolute;
+        top: 40px;
+        bottom: 60px;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList table {
+        margin-bottom: 0;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList .table td{
+        padding: 7px;
+        line-height: 1.42857143;
+        vertical-align: middle;
+        text-align: center;
+        border-top: 1px solid #ddd;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList .table>thead>tr>th {
+        padding: 5px;
+        line-height: 1.42857143;
+        vertical-align: middle;
+        text-align: center;
+        border-top: 1px solid #ddd;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList .check-result-pager .total {
+        padding: 10px;
+        margin-left: 5px;
+    }
+    #advanceSearchLeftContainer .searchResultPanel .dataList .check-result-pager .page {
+        padding: 10px 0;
+        width: auto;
+        float: right;
+        margin-right: 5px;
+    }
+    .tableListSelected{
+        color: white;
+        background-color: #636ef5!important;
+    }
+    #advanceSearchLeftContainer .fm-grid-pager {
+        position: relative!important;
+    }
+</style>
+<div ng-controller="AdvanceSearchController" id="advanceSearchLeftContainer" >
+    <div ng-show="currentPanel==='search'" ng-click="monitorClickEvent($event)" class="searchConditionPanel">
+        <!-- 搜索头部 -->
+        <div class="searchHeader">
+            <h4>高级查询</h4>
+            <a href="javascript:void(0);" class="advanceSearchClose" ng-click="closeAdvanceSearchPanel()"></a>
+        </div>
+        <!-- 搜索条件选择部分 -->
+        <div class="searchCondition fm-scroll">
+            <form class="w5c-form" w5c-form-validate="" novalidate name="advanceSearchForm">
+                <ul>
+                    <li>
+                        <div class="blockDescLiDiv advance-search-label"><span>范围</span></div>
+                        <select class="fm-control poiRightPanel_select" ng-model="searchModel.dbId" ng-options="value.id as value.label for value in currentAreaBlocks">
+                        </select>
+                    </li>
+                    <li>
+                        <div class="blockDescLiDiv advance-search-label"><span>图幅</span></div>
+                        <input class="form-control poiRightPanel_Input" type="text" ng-model="searchModel.meshIds" />
+                    </li>
+                    <li>
+                        <div class="blockDescLiDiv advance-search-label"><span>Grid</span></div>
+                        <input class="form-control poiRightPanel_Input" type="text" ng-model="searchModel.gridIds" />
+                    </li>
+                    <li class="typeList">
+                        <div class="blockDescLiDiv advance-search-label"><span>类型</span></div>
+                        <input class="form-control poiRightPanel_Input" type="text" ng-model="currentSelectedType" ng-click="showTypeList()" />
+                        <treecontrol ng-if="allMainTable"
+                                     ng-show="typeListFlag && allMainTable"
+                                     class="tree-light diyTree fm-scroll"
+                                     tree-model="allMainTable"
+                                     filter-expression="currentSelectedType"
+                                     options="treeOptions"
+                                     node-children="children"
+                                     on-selection="showSelected(node, selected, $parentNode)"
+                                     selected-node="node2">
+                            {{node.nameCHI}}
+                        </treecontrol>
+                        <div class="diyTree" style="text-align: center;height: 50px;line-height: 50px;overflow: hidden;" ng-show="typeListFlag && !allMainTable"> 正在加载数据，请稍后... </div>
+                    </li>
+
+                    <li  class="attrCondition">
+                        <div class="listAnimate" ng-repeat="item in searchModel.conditions">
+                            <div class="blockDescLiDiv advance-search-label"><span>属性</span></div>
+                            <select style="width: 80px;" class="fm-control poiRightPanel_select" ng-click="attrSelectInfo()" ng-change="selectAction($index)" ng-model="item.fieldName" ng-options="value.fieldName as value.alterName for value in currentAttr | filterEnableDataType">
+                                <option value="">属性</option>
+                            </select>
+                            <select ng-cloak style="width: 60px;" class="fm-control poiRightPanel_select" ng-model="item.operator" ng-show="(item.fieldType!='Integer'&&item.fieldType!='Double')" ng-options="value.id as value.label for value in ConditionRange">
+                                <option value="">条件</option>
+                            </select>
+                            <select ng-cloak style="width: 60px;" class="form-control poiRightPanel_select" ng-model="item.operator" ng-show="(item.fieldType=='Integer'||item.fieldType=='Double')" ng-options="value.id as value.label disable when ([7,8,9].indexOf(value.id)!=-1) for value in ConditionRange">
+                                <option value="">条件</option>
+                            </select>
+                            <span style="padding: 1px 0 1px 1px;">值</span>
+                            <input class="form-control poiRightPanel_Input" style="width:40px" ng-model="item.value" ng-change="inputConditionValue(item)" type="text" />
+                            <img src="../../images/newPoi/rightPanelIcon/button-delete.png" style="margin-bottom: 3px;cursor: pointer" ng-click="deleteCondition($index) " />
+                        </div>
+                        <img src="../../images/newPoi/rightPanelIcon/button-add.png"
+                             class="plusButton"
+                             style="top: 188px; right: 10px;cursor: pointer" title="点击添加条件"
+                             ng-click="addCondition()" />
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!-- 搜索底部 -->
+        <div class="footer">
+            <button class="btn searchToolBtn" ng-click="clearCondition()">清空</button>
+            <button class="btn searchToolBtn" ng-click="firstSearchRequest()">搜索</button>
+        </div>
+    </div>
+
+<!---------------------------------------------------------搜索结果部分------------------------------------------------------------------------------->
+
+    <div ng-show="currentPanel==='result'" class="searchResultPanel">
+        <!-- 结果头部 -->
+        <div class="searchHeader">
+            <h4>查询结果</h4>
+            <img src="../../images/newPoi/leftPanelIcon/icon-back-left.png" class="left-panel-hide" ng-click="hideAdvanceResultLeftPanel()">
+        </div>
+        <div class="dataList fm-scroll">
+            <table ng-table-dynamic="tableParams with tableHead" class="table list-table table-condensed table-striped fm-scroll" ng-style="leftListTableStyle" template-pagination="../../apps/webEditor/editor/components/left-panels/list/leftListPagerTmpl.html">
+                <colgroup>
+                    <col ng-repeat="col in tableHead | filter:{show: true}" width="{{col.width}}"/>
+                </colgroup>
+                <tr style="cursor: pointer" ng-class="{'tableListSelected': currentSeletedDataIndex==$index}" ng-repeat="row in $data" ng-click="showFeature(row, $index)" ng-show="!showLoading">
+                    <td ng-repeat="col in $columns">
+                        <span ng-if="!col.html" ng-bind-html="col.getValue?col.getValue(this,row):row[col.field]"></span>
+                        <span ng-if="col.html" fm-bind-compiled-html="col.getValue(this, row)"></span>
+                    </td>
+                </tr>
+                <tr class="text-center" ng-show="!$data.length && !showLoading">
+                    <td colspan="{{tableHead.length}}">{{'列表无数据'}}</td>
+                </tr>
+                <tr class="text-center" ng-show="showLoading">
+                    <td colspan="{{tableHead.length}}">数据加载中...</td>
+                </tr>
+            </table>
+        </div>
+        <!-- 结果底部 -->
+        <div class="footer">
+            <button class="btn resultToolBtn" ng-click="backToAdvanceSearch()">返回</button>
+        </div>
+    </div>
+</div>

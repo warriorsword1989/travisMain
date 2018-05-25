@@ -1,0 +1,106 @@
+<style>
+    #edit-tool-panel {
+        font-size: 0;  /*去掉div之间的空隙，注意在子要素中进行覆盖*/
+        background-color: transparent;
+        height: 0px;
+    }
+    #edit-tool-panel ul.list-group {
+        margin: 0;
+        padding: 0;
+    }
+    #edit-tool-panel ul.list-group > li {
+        height: 30px;
+        user-select: none;
+        line-height: 30px;
+        color: #182848;
+        cursor: pointer;
+        list-style: none;
+        font-size: 12px;
+        text-align: center;
+        position: relative;
+        background-color: #ffffff;
+        border-bottom: 1px solid #d2e1ff;
+    }
+    #edit-tool-panel ul.list-group > li:hover{
+        background-color: rgba(137, 176, 244, 0.2);
+    }
+    #edit-tool-panel ul.list-group > li:first-child {
+        border-top: 1px solid #d2e1ff;
+    }
+    #edit-tool-panel ul.list-group li.btn-active {
+        background-color: rgba(137, 176, 244, 0.2);
+    }
+    #edit-tool-panel .supTool-panel {
+        display: inline-block;
+        width: 40px;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 0 10px #93bbff;
+    }
+    #edit-tool-panel .subTool-panel {
+        float: left;
+        margin-right: 10px;
+        width: 100px;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 0 10px #93bbff;
+    }
+    #edit-tool-panel .supTool-panel ul.list-group > li.deleteFeature {
+        color: red;
+    }
+    #edit-tool-panel .supTool-panel ul.list-group > li .batchIcon {
+        height: 0;
+        width: 0;
+        top: 22px;
+        left: 32px;
+        position: absolute;
+        border-left: 8px solid transparent;
+        border-bottom: 8px solid #636ef5;
+    }
+    #edit-tool-panel .subTool-panel ul.list-group > li:last-child {
+        height: 30px;
+        line-height: 30px;
+    }
+    #edit-tool-panel .subTool-panel ul.list-group > li label {
+        padding: 0;
+        margin-right: 5px;
+    }
+</style>
+<div id="edit-tool-panel" ng-controller="editToolCtrl" ng-show="isOpen">
+    <!--工具的一级面板-->
+    <div class="supTool-panel" ng-if="isFirstLevel">
+        <ul class="list-group feature-select-tool">
+            <li ng-click="handler(tool)"
+                ng-repeat="tool in tools track by $index"
+                ng-class="{true: 'btn-active'}[activeTool===tool.type]"
+                title="{{tool.title}}">
+                {{tool.text}}
+                <div ng-if="!$index && (tool.editResult === 'PathResult' || tool.editResult === 'PolygonResult')"
+                     class="batchIcon">
+                </div>
+            </li>
+            <li class="deleteFeature" ng-if="activeToolScope.editable && activePanelFlag != 'batchPanel'" ng-style="{visibility: activeToolScope.deletable ? 'visible' : 'hidden'}" ng-click="deleteFeature()">删除</li>
+        </ul>
+    </div>
+    <!--工具的二级面板-->
+    <div class="subTool-panel" ng-show="subToolFlag && (subTools.length > 0 || snapActors.length > 0)">
+        <ul class="list-group">
+            <li ng-bind="tool.title"
+                class="tool"
+                ng-click="onSubToolClick(tool)"
+                ng-repeat="tool in subTools"
+                ng-class="{true:'btn-active'}[tool.checked]">
+            </li>
+            <li ng-show="snapActors.length" ng-repeat="actor in snapActors">
+                <input checked="{{actor.enable}}"
+                       class="fm-control"
+                       id="snapActor_{{$index}}"
+                       ng-click="onActorCkbClick(actor)"
+                       ng-model="actor.enable"
+                       type="checkbox" />
+                <label for="snapActor_{{$index}}" ng-bind="actor.geoLiveType.indexOf('NODE') > -1 ? '捕捉点' : '捕捉线'">
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>

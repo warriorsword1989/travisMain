@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+  - "8.1.4"
+before_install:
+  - npm update -g npm
+install:
+  - npm install
+script:
+  - npm run lint
+before_deploy:
+  - . build.sh
+  - git config user.name "travis-ci"
+  - git config user.email "travis-ci@navinfo.com"
+  - git add .
+  - git commit -m 'travis automatic generate changelog'
+  - git push origin HEAD:master
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: WebApp.zip
+  skip_cleanup: true
+  on:
+    tags: true
+cache:
+  directories:
+  - node_modules
+# notifications:
+#   slack: navinfo:6troi7FBmywDvUc46jKuSJZE

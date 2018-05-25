@@ -1,0 +1,177 @@
+<style>
+    .extractButton{
+        position: absolute;
+        right: 20px;
+        top: 10px;
+    }
+    .taskList_rightDiv div.oldSelect {
+        box-shadow: inset 0 0 90px 0px rgba(231, 226, 79, 0.8);
+    }
+</style>
+<div class="taskList_rightDiv" ng-controller="taskListChildCtrl">
+    <div ng-cloak ng-if="taskListData.length" class="scroll_style scrollDiy">
+        <!--目前只显示type等于0、2、3、4、7 ng-show="showTaskList"任务-->
+        <div ng-repeat="item in taskListData track by item.subtaskId" ng-style="taskListMargin" ng-class="{'oldSelect': item.isOld}">
+            <!-- 卡片的头部 -->
+            <div class="taskListStyle_title" ng-class="{'taskListStyle_title': true, 'green': item.isQuality != 1, 'red': item.isQuality == 1}">
+                <div class="taskListStyle_title_desc">
+                        <span title={{item.name}} ng-if="item.name.length < 35">
+                            {{item.name}}
+                        </span>
+                        <span title={{item.name}} class="long-title" ng-if="item.name.length > 34">
+                            {{item.name}}
+                        </span>
+                </div>
+            </div>
+            <!-- 卡片主显示区 -->
+            <div class="taskListStyle_body" style="position: relative" ng-click="selectSubTask(item)">
+                <!-- 时间 -->
+                <div class="taskListStyle_body_line">
+                    <div class="taskListStyle_body_line_desc">
+                        <span>
+                            时间：
+                        </span>
+                    </div>
+                    <div class="taskListStyle_body_line_value">
+                        <span>
+                            {{item.planStartDate}} - {{item.planEndDate}}
+                        </span>
+                        <span style="margin-left: 20px;">{{item.version}}</span>
+                    </div>
+                </div>
+                <div class="taskListStyle_body_otherLine">
+                    <div class="taskListStyle_body_otherLine_title">
+                        <span>
+                            状态：
+                        </span>
+                    </div>
+                    <div ng-if="(item.type === 0 || item.type === 2) && item.workKind !=5" class="taskListStyle_body_line_value">
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    待作业POI
+                                </span>
+                                <span style="padding-left: 4px">
+                                    {{item.poiWaitWork? item.poiWaitWork : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    待提交POI
+                                </span>
+                                <span style="padding-left: 4px">
+                                    {{item.poiWorked? item.poiWorked : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    已提交POI
+                                </span>
+                                <span style="padding-left: 4px">
+                                    {{item.poiCommit? item.poiCommit : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="item.type === 3 || item.type === 4" class="taskListStyle_body_line_value">
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    待做Tips
+                                </span>
+                                <span style="padding-left: 4px">
+                                    {{item.tipsPrepared? item.tipsPrepared : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    全部Tips
+                                </span>
+                                <span style="padding-left: 4px">
+                                    {{item.tipsTotal? item.tipsTotal : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="(item.type === 0 || item.type === 2) && item.workKind ==5" class="taskListStyle_body_line_value">
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    待作业
+                                </span>
+                                <span style="padding-left: 4px">
+                                    POI {{item.poiWaitWork? item.poiWaitWork : '无'}}
+                                </span>
+                                <span style="padding-left: 4px">
+                                    点门牌 {{item.pointWaitWork? item.pointWaitWork : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    待提交
+                                </span>
+                                <span style="padding-left: 4px">
+                                    POI {{item.poiWorked? item.poiWorked : '无'}}
+                                </span>
+                                 <span style="padding-left: 4px">
+                                    点门牌 {{item.pointWorked? item.pointWorked : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    已提交
+                                </span>
+                                <span style="padding-left: 4px">
+                                    POI {{item.poiCommit? item.poiCommit : '无'}}
+                                </span>
+                                <span style="padding-left: 4px">
+                                    点门牌 {{item.pointCommit? item.pointCommit : '无'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="item.type === 7" class="taskListStyle_body_line_value">
+                        <div class="taskListStyle_body_line">
+                            <div class="taskListStyle_body_otherLine_width">
+                                <span>
+                                    作业中
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="taskListStyle_body_line">
+                    <div class="taskListStyle_body_line_desc">
+                        <span>
+                            操作：
+                        </span>
+                    </div>
+                    <div class="taskListStyle_body_line_value">
+                        <div ng-if="([3,4].indexOf(item.type) > -1 && !(item.isQuality == 1 && (!item.isExtract))) || [0, 2, 7].indexOf(item.type) > -1" class="btn-task-lang btn-close" ng-click="submitTask($event, item)">
+                            关闭
+                        </div>
+                        <!--<div ng-if="!((item.type == 3 || item.type == 4) && item.isQuality == 1 && (item.tipsTypeCount===0 && item.checkCount===0))" class="btn-task-lang btn-close" ng-click="submitTask($event, item)">-->
+                            <!--关闭-->
+                        <!--</div>-->
+                        <div ng-if="(item.type == 3 || item.type == 4) && item.isQuality == 1 && (!item.isExtract)" class="btn-task-lang btn-apply" ng-click="extractTask($event, item)">
+                            申请
+                        </div>
+                    </div>
+                </div>
+                <div class="task-quality-icon" ng-if="item.isQuality == 1"></div>
+            </div>
+        </div>
+        <!-- 页面加载中效果 -->
+        <div ng-show="loading.flag" class="show-animation" ng-include="'./svgLoading.html'"></div>
+    </div>
+</div>

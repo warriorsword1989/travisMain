@@ -1,0 +1,23 @@
+<div ng-controller="showImageCtrl" style="width:500px;">
+    <div class="showbox">
+        <div class="image" style="height: 400px;">
+            <img ng-src="{{originImage}}" id="colImage" ng-style="bigImgStyle">
+        </div>
+        <div class="thumbs">
+            <div class="prev" ng-click="turnPhotoPage(1);"></div>
+            <div class="thumbs-list">
+                <ul class="thumbs-list-ul">
+                    <li class="thumbs-list-li" ng-repeat="item in photos" ng-click="changeBigImg(item)">
+                        <div class="" ng-if="photos.length < 11">
+                            <img ng-src="{{item.thumbnailUrl}}">
+                        </div>
+                        <div class="" ng-if="photos.length > 10 && $index > 10*(photoPage-1)-1 && $index < 10*photoPage">
+                            <img ng-src="{{item.thumbnailUrl}}">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="next" ng-click="turnPhotoPage(2);"></div>
+        </div>
+    </div>
+</div>

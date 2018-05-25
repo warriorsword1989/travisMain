@@ -1,0 +1,161 @@
+<style>
+    .qua-apply-content{
+        line-height: 2;
+        padding: 8px;
+    }
+
+    .qua-apply-content select{
+        height: 24px;
+        padding: 0;
+        width: 130px;
+    }
+
+    .qua-apply-content .screen-input{
+        width: 130px;
+        height: 24px;
+    }
+
+    .que-apply-btn{
+        margin: 6px 8px;
+        background-color: #636ef5;
+        color: #fff;
+    }
+    
+    .que-apply-btn:hover{
+        color: #eee;
+    }
+
+    .qua-apply-content.dropdown-menu {
+        width: 250px;
+        height: 280px;
+        margin-left: -40px;
+    }
+    .date-switch-type {
+        margin-top: 0;
+    }
+    .qua-apply-content.dropdown-menu button {
+        outline: 0;
+        border: 0
+    }
+
+    .qua-apply-content.dropdown-menu tbody {
+        height: 180px;
+    }
+    .qua-apply-content.dropdown-menu button {
+        border-radius: 0;
+        box-shadow: none;
+        background: #FFF;
+        color: #000;
+    }
+
+    .qua-apply-content.dropdown-menu tbody button {
+        padding: 8px;
+        border: 0;
+        border-radius: 0;
+        background: #FFF;
+        box-shadow: none;
+    }
+    .qua-apply-content.dropdown-menu tbody button:hover {
+        box-shadow: none;
+    }
+    .qua-apply-content.dropdown-menu tbody .btn-primary {
+        background: #636ef5;
+        color: #fff;
+    }
+
+    .qua-apply-content.dropdown-menu.qua-apply-content-mode-1 tbody button, .qua-apply-content.dropdown-menu.qua-apply-content-mode-2 tbody button {
+        height: 65px
+    }
+
+
+    .datepicker.dropdown-menu button {
+        outline: 0;
+        border: 0
+    }
+
+    .datepicker.dropdown-menu tbody {
+        height: 180px;
+    }
+    .datepicker.dropdown-menu button {
+        border-radius: 0;
+        box-shadow: none;
+        background: #FFF;
+        color: #000;
+    }
+
+    .datepicker.dropdown-menu tbody button {
+        padding: 8px;
+        border: 0;
+        border-radius: 0;
+        background: #FFF;
+        box-shadow: none;
+    }
+    .datepicker.dropdown-menu tbody button:hover {
+        box-shadow: none;
+    }
+    .datepicker.dropdown-menu tbody .btn-primary {
+        background: #636ef5;
+        color: #fff;
+    }
+
+    .datepicker.dropdown-menu.datepicker-mode-1 tbody button, .datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+        height: 65px
+    }
+
+    .timepicker.dropdown-menu button {
+        outline: 0;
+        border: 0
+    }
+
+    .timepicker.dropdown-menu tbody button {
+        padding: 6px;
+        background: #FFF;
+        box-shadow: none;
+    }
+    .timepicker.dropdown-menu .btn-default {
+        background: #FFF;
+        box-shadow: none;
+    }
+    .timepicker.dropdown-menu tbody .btn-primary {
+        background: #636ef5;
+        color: #fff;
+    }
+</style>
+<div class="fm-panel" ng-controller="screenQuaDataCtrl" style="height:126px;width:500px;overflow: visible;">
+    <div class="qua-apply-content" style="height:80px;">
+        <div>
+            <div class="col-md-6">
+                <label class="col-md-4" style="width: 80px;">作业员</label>
+                <div>
+                    <select class="form-control poiRightPanel_select" ng-model="quaOperator" ng-change="changeOperator(quaOperator);"
+                            ng-options="value.userId as value.content for value in operatorArray" ng-disabled="quaLevel != '请选择' && opType == -1">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="pull-left">作业员等级</label>
+                <div class="col-md-5">
+                    <select class="form-control poiRightPanel_select" style="width: 70px;" ng-model="quaLevel" ng-change="changeLevel(quaLevel);"
+                            ng-options="value for value in operatorLevel" ng-disabled="quaOperator != 0 && opType == 1">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="col-md-2" style="width: 80px;">作业时间</label>
+            <div class="pull-left">
+                <input type="text" class="form-control screen-input" ng-model="workTimeBegin" data-date-format="yyyy-MM-dd" data-date-type="number" data-autoclose="1" name="date1" bs-datepicker>
+            </div>
+            <div class="pull-left" style="margin-left: 10px;"> —— </div>
+            <div class="pull-left" style="margin-left: 11px;">
+                <input type="text" class="form-control screen-input" ng-model="workTimeEnd" data-date-format="yyyy-MM-dd" data-date-type="number" data-autoclose="1" name="date2" bs-datepicker>
+            </div>
+        </div>
+    </div>
+    <div style="border-bottom: 1px solid #ddd;"></div>
+    <div style="text-align:right;">
+        <button type="button" class="btn que-apply-btn" ng-click="doApply()">
+            申请数据
+        </button>
+    </div>
+</div>

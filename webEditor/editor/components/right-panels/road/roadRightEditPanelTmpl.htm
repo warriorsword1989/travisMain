@@ -1,0 +1,22 @@
+<div class="fm-panel fm-stretch" ng-controller="RoadRightEditPanelCtrl" id="roadRightEditPanel">
+    <div class="header">
+        <div class="title" style="margin-left: 30px;">
+            <strong ng-bind="objectName">
+            </strong>
+            <strong ng-bind="objectPid" title="{{objectPid}}">
+            </strong>
+        </div>
+        <div class="toolbar">
+            <button class="fm-img-btn save" ng-click="doSave()" ng-if="editable">
+            </button>
+            <!--<button class="fm-img-btn delete" ng-click="doDelete()" ng-if="editable" ng-style="{visibility: deletable ? 'visible' : 'hidden'}">-->
+            <!--</button>-->
+        </div>
+    </div>
+    <div class="content">
+        <ng-form name="roadForm" novalidate="">
+            <div class="fm-stretch" fm-form-control="" ng-include="roadEditTmpl">
+            </div>
+        </ng-form>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="taskList_rightDiv" ng-controller="taskCollectTableCtrl">
+    <div class="task-table-title">
+        {{taskTypes[taskType]}}
+    </div>
+    <div ng-cloak ng-if="taskListData.length" class="scroll_style scrollDiy" style="height: auto;" ng-style="{'height': wHeight - 50}">
+        <div class="task-btn-option" style="width: 100%; height: auto; background-color: rgba(255, 255, 255, 0);">
+            <!--<div class="task-btn-group">
+                <div class="checkbox-container">
+                    <label for="checkboxAll">
+                        <input type="checkbox" id="checkboxAll" ng-model="checkboxes.checked" ng-click="checkTaskRow({}, 0, $event);" class="fm-control"/>
+                        全选
+                    </label>
+                </div>
+            </div>-->
+            <div class="task-search-container">
+                <input type="text" class="table-search-text" ng-model="searchModel.searchText" placeholder="搜索子任务名称或ID" ng-keyup="doSearchTaskList()">
+                <div ng-show="searchModel.searchText" class="empty-input-text" ng-click="emptySearchInput();"></div>
+            </div>
+        </div>
+        <div
+                class="fm-grid purple taskTable"
+                ui-grid="gridOptions"
+                ui-grid-auto-resize=""
+                ui-grid-pagination=""
+                ui-grid-resize-columns=""
+                ui-grid-selection=""
+                ng-style="{'height': wHeight - 50, 'width': '100%', 'transition': 'none'}">
+            <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+        </div>
+    </div>
+</div>

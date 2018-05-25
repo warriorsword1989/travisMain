@@ -1,0 +1,47 @@
+<link href="../../scripts/libs/ng-table/ng-table.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../scripts/libs/sweet-alert-upgrade/sweetalert.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/webEditor/editor-column.css">
+<link href="../../scripts/libs/angular-chosen/chosen.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/pager.css" rel="stylesheet" type="text/css"/>
+<link href="../../styles/editor.css" rel="stylesheet" type="text/css"/>
+<div class="column_container" ng-style="panelBodyHight">
+    <div class="menu_div">
+        <div class="title">
+            <span style="margin-left:5px;">点门牌-英文（{{totalInfo}}）</span>
+        </div>
+        <div class="content">
+            <div>
+                <ul class="list-group list_item">
+                    <li ng-repeat="item in childTaskList" ng-click="selectTaskList(item)"
+                        ng-class="{'taskListSelect': item.select}">
+                        <div>
+                            <span>{{item.name}}</span>
+                        </div>
+                        <div class="taskListNum">
+                            <span>{{item.num}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="left-footer">
+            <div>
+                <button type="button" class="btn btn-apply" ng-click="applyPoi();">申  请</button>
+                <button type="button" class="btn btn-submit" ng-if="!isQuality" ng-click="doSubmit();">提  交</button>
+            </div>
+        </div>
+    </div>
+    <div ng-include="taskListUrl" style="height: 100%"></div>
+</div>
+<div ng-show="showLoading.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>
+<div class="fm-modal" drag ng-show="quaModal">
+    <div drag-handle style="height: 40px;width: 100%;background-color: #685dff;cursor: pointer;padding: 10px;">
+        <div>
+            <span style="color: white;font-size: 14px;font-weight: bold;padding:0 4px;">筛选质检数据</span>
+            <button type="button"  class="close pull-right" style="padding:0 4px;font-size:28px;color:white;opacity:1; margin-top: -5px;" ng-click="closeQuaModal()" title="关闭"><span>&times;</span></button>
+        </div>
+    </div>
+    <div class="content" ng-include="quaModalTpl">
+    </div>
+</div>

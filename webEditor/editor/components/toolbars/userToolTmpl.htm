@@ -1,0 +1,92 @@
+<style>
+    .fm-dropdown-menu ul.pointAddress {
+        list-style: none;
+        padding: 0;
+        position: absolute;
+        right: 80px;
+        width: 80px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px 0 #93bbff;
+        display: none;
+    }
+
+    .fm-dropdown-menu li.pointAddress-check ul.pointAddress {
+        top: 96px;
+    }
+
+    .fm-dropdown-menu li.pointAddress-commit ul.pointAddress {
+        top: 144px;
+    }
+
+    .fm-dropdown-menu li.pointAddress-check:hover ul.pointAddress,
+    .fm-dropdown-menu li.pointAddress-commit:hover ul.pointAddress {
+        display: block;
+    }
+
+    .fm-dropdown-menu ul.pointAddress li {
+        border: 1px solid #fff;
+    }
+
+    .fm-dropdown-menu ul.pointAddress li:hover {
+        background-color: rgba(88, 150, 255, 0.1);
+        border: 1px solid #5896ff;
+    }
+</style>
+<div ng-controller="userToolCtrl">
+    <div>
+        <!-- <div class="innerImg"></div> -->
+    </div>
+    <ul class="list-group fm-dropdown-menu">
+        <li ng-class="{true:'disabled'}[menuList.indexOf('taskPanel') < 0]" ng-click="showTaskPanel(menuList.indexOf('taskPanel') < 0);">
+            任务面板
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('roadName') < 0]" ng-click="showRoadName(menuList.indexOf('roadName') < 0)">
+            道路名作业
+        </li>
+        <li ng-click="showBatchTranslate()">
+            批量翻译
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('batch') < 0]" ng-click="showBatchTool(menuList.indexOf('batch') < 0)">
+            批处理
+        </li>
+        <!-- 根据 陈天翔 的要求，SP3版本屏蔽自动录入 -->
+        <!--<li ng-class="{true:'disabled'}[menuList.indexOf('autoEnter') < 0]" ng-click="showAutoResult(menuList.indexOf('autoEnter') < 0)">-->
+            <!--自动录入-->
+        <!--</li>-->
+        <li ng-class="{true:'disabled'}[menuList.indexOf('checking') < 0]" ng-click="showCheckTool(menuList.indexOf('checking') < 0)" ng-if="!isRefineTask">
+            检查
+        </li>
+        <li class="pointAddress-check" ng-if="isRefineTask">
+            检查
+            <ul class="pointAddress">
+                <li ng-click="startCheck(9)">检查POI</li>
+                <li ng-click="startCheck(6)">检查点门牌</li>
+            </ul>
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('checkResult') < 0]" ng-click="showCheckResult(menuList.indexOf('checkResult') < 0)">
+            查看错误
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('submit') < 0]" ng-click="doSubmitData()" ng-if="!isRefineTask">
+            提交
+        </li>
+        <li class="pointAddress-commit" ng-if="isRefineTask">
+            提交
+            <ul class="pointAddress">
+                <li ng-click="startCommit(9)">提交POI</li>
+                <li ng-click="startCommit(6)">提交点门牌</li>
+            </ul>
+        </li>
+        <li ng-click="showHistory()">
+            历史数据
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('trackPhoto') < 0]" ng-click="showTrackPanel(menuList.indexOf('trackPhoto') < 0)">
+            轨迹照片
+        </li>
+        <li ng-class="{true:'disabled'}[menuList.indexOf('msgAlert') < 0]" ng-click="showMsgAlert(menuList.indexOf('msgAlert') < 0)">
+            消息列表
+        </li>
+        <li>
+            <a href="#/login">退出</a>
+        </li>
+    </ul>
+</div>

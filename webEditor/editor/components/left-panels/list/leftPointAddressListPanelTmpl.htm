@@ -1,0 +1,61 @@
+<style>
+    #leftPoiListPanelCtrl {
+        color: #000;
+        height: 100%;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-header .ui-grid-header-cell-row .ui-grid-header-cell {
+        border-right: 1px solid;
+        border-color: #bdceec;;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-header .ui-grid-header-cell-row .ui-grid-header-cell {
+        border-right: 1px solid;
+        border-color: #bdceec;;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-header-cell:last-child {
+        border-right: none !important;
+    }
+    /* poi表格样式 */
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-row {
+        min-width: 300px;
+        border-top: none;
+        border-bottom: none;
+    }
+    #leftPoiListPanelCtrl .ui-grid-row:nth-child(odd) {
+        background: #e6ebf5 !important;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-row:hover,
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-row:active,
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-row.ui-grid-row-selected {
+        border-top: none;
+        border-bottom: none;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-cell {
+        border-right: 1px solid #bdceec;
+        height: 30px !important;
+    }
+    #leftPoiListPanelCtrl .ui-grid-row:nth-child(odd) .ui-grid-cell {
+        background: #e6ebf5;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-cell:last-child {
+        border-right: none !important;
+    }
+    #leftPoiListPanelCtrl .ui-grid.fm-grid .ui-grid-cell .ui-grid-cell-contents {
+        white-space: nowrap !important;
+    }
+</style>
+<div id="leftPoiListPanelCtrl" ng-controller="leftPointAddressListPanelCtrl">
+    <div class="table-search" ng-show="!leftPanelAll">
+        <input type="text" class="table-search-text" ng-model="searchText" placeholder="请输入外业道路名" ng-keyup="doSearchPoiList($event)">
+        <div class="search-icon" ng-click="searchContent();" title="搜索"></div>
+    </div>
+    <div ng-cloak ng-if="showTable" ui-grid="gridOptions"
+         ui-grid-selection
+         ui-grid-pagination
+         ui-grid-auto-resize
+         ui-grid-resize-columns
+         ui-grid-move-columns
+         ng-class="{'fm-grid': true, 'tight': !leftPanelAll}" ng-style="{'height': wHeight}">
+        <div ng-show="isLoading" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+    </div>
+    <div class="expandPanel" ng-click="switchFullAndLeft();" ng-style="expandPanelStyle"></div>
+</div>

@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="../../styles/webEditor/taskList.css">
+<div ng-class="{'taskList_container': true, 'left': leftMenuStatus, 'right': !leftMenuStatus}" ng-style="leftMenuStyle">
+    <div class="taskList_leftDiv">
+        <div class="left-menu-header">
+            <div class="left-menu-text">FastMap 一体化编辑平台</div>
+            <div ng-class="{'left-menu-fold': true, 'left': leftMenuStatus, 'right': !leftMenuStatus}" ng-click="changeLeftMenuStatus();" ng-style="leftMenuFoldStyle"></div>
+        </div>
+        <div class="fm-scroll left-menu-list" ng-style="menuListStyle">
+            <div class="left-menu-title" ng-repeat="item in finalResultArray track by $index">
+                <div class="parent-task-title taskListLi" ng-class="{'taskListSelect': item.select}" ng-click="showTaskDetail(item)">
+                    <div ng-if="item.type != 7">
+                        <span>{{taskTypes[item.type]}}&nbsp[&nbsp{{item.total}}&nbsp]</span>
+                    </div>
+                    <!--月编专项无子任务概念-->
+                    <div ng-if="item.type == 7">
+                        <span>{{taskTypes[item.type]}}</span>
+                    </div>
+                    <img ng-if="item.isParent" ng-src="{{item.isOpen ? '../../images/newPoi/taskList/icon_down_normal.png' : '../../images/newPoi/taskList/icon_up_normal.png'}}">
+                </div>
+                <div ng-style="{'display': item.isOpen ? 'block':'none'}" class="child-task-list" ng-if="item.isParent">
+                    <ul class="list-group listUlCss">
+                        <li ng-repeat="(key, value) in item.child" ng-click="showTaskDetail(item.child[key])"
+                            ng-class="{'taskListSelect': item.child[key].select}" class="taskListLi">
+                            <div class="taskListDesc">
+                                <span>{{item.child[key].name}}</span>
+                            </div>
+                            <div class="taskListNum">
+                                <span>{{item.child[key].total}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="historyTaskList left-menu-title" ng-class="{'taskListSelect': taskHistoryHighLight}" ng-click="showTaskDetail('taskHistory')">
+                <span>历史子任务</span>
+            </div>
+        </div>
+        <div class="task-list-option">
+            <button class="task-list-button blue">账户设置</button>
+            <button class="task-list-button red" ng-click="logout()">退出登录</button>
+        </div>
+    </div>
+    <div ng-include="taskListUrl" style="height: 100%;"></div>
+    <!--<div class="task-panel-close" ng-click="logout()" ng-style="{'display': ngDialogData.showLogout?'block':'none'}">
+    </div>-->
+</div>
+<!-- 页面加载中效果 -->
+<div ng-show="loading.flag" class="show-animation" ng-include="'./svgLoading.html'"></div>

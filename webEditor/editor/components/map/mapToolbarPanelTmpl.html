@@ -1,0 +1,82 @@
+<style>
+    .map-toolbar-panel {
+        /*height: 340px;*/
+        font-size: 0px;  /*去掉div之间的空隙，注意在子要素中进行覆盖*/
+        padding-top: 80px;
+    }
+    .map-toolbar-panel .header {
+        margin-top: -80px;
+    }
+    .map-toolbar-panel .search-box {
+        padding: 8px 10px 0;
+        height: 40px;
+        border-bottom: 1px #d2e1ff solid;
+    }
+    .map-toolbar-panel .search-box input {
+        width: 280px;
+        height: 24px;
+        border: solid 1px rgba(24, 40, 72, 0.2);
+        padding-right: 2px;
+        background: url("../../images/webEditor/left-panel/button_search_normal.png") no-repeat 258px 3px;
+    }
+    .map-toolbar-panel ul.tools-group-ul {
+        margin: 0;
+        box-shadow: none;
+    }
+    .map-toolbar-panel ul.tools-group-ul > li {
+        list-style: none;
+        display: inline-block;
+        border: 1px solid transparent;
+        width: 86px;
+        height: 65px;
+        padding-top: 6px;
+        margin-left: 8px;
+        margin-top: 5px;
+        vertical-align: top;
+    }
+    .map-toolbar-panel ul.tools-group-ul > li.tool {
+        font-size: 12px;
+        color: #182848;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .map-toolbar-panel ul.tools-group-ul > li.tool:last-child {
+        margin-bottom: 5px;
+    }
+    .map-toolbar-panel ul.tools-group-ul > li.tool:hover {
+        background-color:  #e0e2fd;
+        border: solid 1px rgba(99, 110, 245, 0.7);
+    }
+    .map-toolbar-panel ul.tools-group-ul > li.tool.active {
+        background-color:  #e0e2fd;
+    }
+    .map-toolbar-panel.edit-mode ul.tools-group-ul > li.tool.selected {
+        background-color: #fffcf0;
+        border: solid 1px #ffcc99;
+    }
+    .map-toolbar-panel .header .title{
+        font-size: 14px;
+    }
+</style>
+<div class="fm-panel map-toolbar-panel" ng-class="{true: 'edit-mode'}[editable]" ng-controller="MapAllToolbarPanelCtrl">
+    <div class="header">
+        <div class="title">
+            地图工具
+        </div>
+    </div>
+    <div class="search-box">
+        <input class="fm-control" ng-model="searchText" placeholder="搜索..." type="text"/>
+    </div>
+    <div class="content fm-scroll" style="overflow-y: scroll;">
+        <fast-collapse class="tools-container" ng-repeat="group in groups" expander-title="{{group.name}}" ng-show="(group.tools | filter : {text: searchText}).length > 0">
+            <div class="tools-group">
+                <ul class="list-group tools-group-ul">
+                    <li class="tool" ng-repeat="tool in group.tools | filter : {text: searchText}" ng-class="{'active': selectTool.name === tool.name}"
+                        ng-click="startTool($event, tool.fun)" title="{{tool.title}}" ng-controller="startEditCtrl">
+                        <tool-item  tool="tool" toggle-to-recent="toggleToRecent(e, tool)"></tool-item>
+                    </li>
+                </ul>
+            </div>
+        </fast-collapse>
+    </div>
+</div>

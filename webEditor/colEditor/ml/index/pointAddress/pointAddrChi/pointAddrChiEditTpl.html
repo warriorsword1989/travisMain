@@ -1,0 +1,35 @@
+<style>
+    .chinaAddressEdit .editTableColumn {
+        border: 1px solid #d4d4d4;
+        border-radius: 3px;
+        padding: 3px 6px;
+        background-color: white;
+        width: 100%;
+    }
+</style>
+<div ng-controller="pointAddrChiEditCtrl" class="chinaAddressEdit">
+    <div style="padding: 10px" class="">
+        <div class="fm-panel">
+            <div class="fm-panel-heading">
+                <span>{{main.selectedItem.name}}</span>
+                <span class="right">
+                    <button ng-if="main.workType=='addrSplit'" style="margin-right: 10px;" type="button" class="btn btn-gap my-btn-success" ng-click="batchEdit();">批量作业</button>
+                </span>
+            </div>
+            <div class="fm-panel-body chinaAddressTable" ng-style="panelBodyHight" style="padding-bottom: 0px;">
+                <div
+                        ui-grid="editGridOptions"
+                        ui-grid-selection
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        class="fm-grid col-grid purple" ng-style="tableBodyHeight">
+                    <div ng-show="loadingFlag" class="tableLoading" ng-include="'./svgLoading.html'"></div>
+                </div>
+            </div>
+            <div class="fm-panel-footer" style="text-align: right">
+                <button type="button" class="btn btn-gap my-btn-primary" ng-click="doSave();">保 存</button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="showLoading.flag" id="loadingAnimate" class="show-animation" ng-include="'svgLoading.html'"></div>
+</div>
