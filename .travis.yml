@@ -15,7 +15,7 @@ before_deploy:
   - git config user.email "linglong@navinfo.com"
   - git add .
   - git commit -m 'travis automatic generate changelog'
-  - git push --force --quiet "https://${GITHUB_TOKEN}@${GH_REF}" master:master
+  - git push --force --quiet "https://${GITHUB_TOKEN}@${GH_REF}" master
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
@@ -31,6 +31,6 @@ branches:
     - master
 env:
  global:
-   - GH_REF: github.com:warriorsword1989/travisMain.git
+   - GH_REF: github.com/warriorsword1989/travisMain.git
 # notifications:
 #   slack: navinfo:6troi7FBmywDvUc46jKuSJZE

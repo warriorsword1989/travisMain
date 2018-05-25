@@ -9,7 +9,6 @@ npm run-script build
 cp -r dist ../../dist
 echo "extart files start"
 cd ..
-ls
 mkdir -p build
 cp -r webEditor build
 cp -r dist build
