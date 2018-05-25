@@ -6,9 +6,8 @@ before_install:
 install:
   - npm install
 script:
-  - npm run lint
+   - . build.sh
 before_deploy:
-  - . build.sh
   - git config user.name "travis-ci"
   - git config user.email "travis-ci@navinfo.com"
   - git add .
