@@ -6,7 +6,8 @@ git clone https://github.com/NavinfoWeb/Tollgate.git
 cd Tollgate
 npm install
 npm run-script build
-cp -r dist ../../dist
+ls
+cp -r dist ../dist
 echo "extart files start"
 cd ..
 mkdir -p build
