@@ -1,12 +1,14 @@
 mkdir -p dist
 echo "pull tollgate"
+mkdir -p tollgate
+cd tollage
 git clone https://github.com/NavinfoWeb/Tollgate.git
 cd Tollgate
 npm install
 npm run-script build
-cp -r dist ../dist
+cp -r dist ../../dist
 echo "extart files start"
-cd ..
+cd ../../
 mkdir -p build
 cp -r webEditor build
 cp -r dist build
@@ -19,8 +21,8 @@ zip -rq ../WebApp.zip ./*
 cd ..
 echo "compress to zip end"
 
-# echo "remove build tmp file start"
-# # rm -rf ${deploy_root}/build
-# echo "remove build tmp file end"
+echo "remove build tmp file start"
+rm -rf ./build
+echo "remove build tmp file end"
 
 
