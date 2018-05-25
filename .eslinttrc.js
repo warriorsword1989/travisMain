@@ -1,0 +1,106 @@
+module.exports = {
+  // 使用eslint-config-airbnb预定义规则
+  "extends": "airbnb-base/legacy",
+  // 添加全局函数和对象
+  "globals": {
+    "fastmap":true,
+    "map":true,
+    "FM":true,
+    "L":true,
+    "angular":true,
+    "App":true,
+    "$":true,
+    "Utils":true,
+    "swal":true,
+    "it":true,
+    "expect":true,
+    "define":true,
+    "beforeEach":true,
+    "describe":true,
+    "spyOn":true,
+    "Application":true,
+    "jasmine":true,
+    "requirejs":true,
+    "Promise":true,
+    "jsts": true,
+    "Wkt": true,
+    "SVG": true,
+    "jQuery": true,
+    "inject": true,
+    "wheelzoom": true,
+    "bindHotKeys": true,
+    "rbush": true,
+    "proj4": true
+  },
+  "plugins": ["angular"],
+  /**
+   * "off" 或 0 - 关闭规则
+   * "warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出),
+   * "error" 或 2 - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)
+   */
+  "rules": {
+    // 开启4个空格缩进规则
+    "indent": [2, 4, { "SwitchCase": 1 }],
+    // 关闭规则，允许使用require
+    "global-require": 0,
+    // 关闭规则，允许函数中的参数不被使用
+    "no-unused-vars": 0,
+    // 关闭规则，忽略行结尾符
+    "linebreak-style": 0,
+    // 允许二进制运算符
+    "no-bitwise":0,
+    // 允许变量在块作用域外使用，暂时先关掉
+    "block-scoped-var":0,
+    // 允许直接使用 Object.prototypes 的内置属性
+    "no-prototype-builtins":0,
+    // 允许使用特定的语法
+    "no-restricted-syntax":0,
+    // 允许使用一元操作符 ++ 和 --
+    "no-plusplus":0,
+    // 允许var声明不在代码开始声明
+    "vars-on-top":0,
+    // 允许标识符中含有下划线
+    "no-underscore-dangle": 0,
+    // 允许空行前面有空格
+    "no-trailing-spaces":[2,{ "skipBlankLines": true }],
+    // 强制函数中的变量要么一起声明要么分开声明
+    "one-var": [2, { "initialized": "never" }],
+    // 允许使用label
+    "no-labels": 0,
+    // 允许对 function 的参数进行重新赋值
+    "no-param-reassign": 0,
+    //允许方法使用在方式定义之前
+    //"no-use-before-define":["error", { "functions": false}]
+    "no-mixed-operators": [
+      2,
+      {
+        "groups": [
+          ["&", "|", "^", "~", "<<", ">>", ">>>"],
+          ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+          ["&&", "||"],
+          ["in", "instanceof"]
+        ],
+        "allowSamePrecedence": true
+      }
+    ],
+    // 强制使用命名的 function 表达式
+    "func-names": 0,
+    // 关闭 === 替代 ==
+    "eqeqeq": 0,
+//    "valid-jsdoc": 2,
+    // 强制一行的最大长度
+    "max-len":[1,130],
+//    "require-jsdoc": ["error", {
+//      "require": {
+//        "FunctionDeclaration": true,
+//        "MethodDefinition": false,
+//        "ClassDeclaration": false,
+//        "ArrowFunctionExpression": false
+//      }
+//    }],
+    // 关闭规则, 允许在循环中使用continue跳出循环
+    "no-continue": 0,
+    // 关闭规则, 允许在else内使用if，保证程序的逻辑性
+    "no-lonely-if": 0
+  }
+};

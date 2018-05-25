@@ -14,6 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-config-angular": "^0.5.0",
+    "eslint-plugin-angular": "^2.4.0",
+    "eslint-plugin-import": "^2.0.1"
   }
 }
