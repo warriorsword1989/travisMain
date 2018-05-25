@@ -9,6 +9,8 @@ script:
   - npm run lint
 before_deploy:
   - . build.sh
+  - git status
+  - git remote -v
   - git config user.name "warriorsword1989"
   - git config user.email "linglong@navinfo.com"
   - git add .
