@@ -5,8 +5,8 @@ before_install:
   - npm update -g npm
 install:
   - npm install
-# script:
-   
+script:
+  
 before_deploy:
   - . build.sh
   - git config user.name "travis-ci"
