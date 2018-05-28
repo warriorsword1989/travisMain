@@ -1,15 +1,11 @@
 mkdir -p dist
-ls
 echo "pull tollgate"
 mkdir -p tollgate
 cd tollgate
-ls
 git clone https://github.com/NavinfoWeb/Tollgate.git
 cd Tollgate
-ls
 npm install
 npm run-script build
-ls
 cp -r ./dist/* ../../dist
 echo "extart files start"
 cd ../..
