@@ -2,7 +2,7 @@ mkdir -p dist
 mkdir -p build
 cd build
 echo "################################开始并发打包################################"
-. build1.sh & . build2.sh. & .build3.sh
+. build1.sh & . build2.sh & .build3.sh &
 wait
 echo "################################并发打包结束################################"
 cd ../..
