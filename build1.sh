@@ -4,5 +4,5 @@ cd build
 git clone https://github.com/NavinfoWeb/Tollgate.git NavinfoWebSDK
 cd NavinfoWebSDK
 npm install
-npm run-script dev
+npm run-script build
 cp -r dist/* ../../dist
