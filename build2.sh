@@ -1,4 +1,5 @@
 echo "#############################开始打包bussiness############################################"
+cd build
 git clone https://github.com/FastmapSDK/NavinfoFastmapBussiness.git
 cd NavinfoFastmapBussiness
 npm install
