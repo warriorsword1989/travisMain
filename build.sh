@@ -5,9 +5,6 @@ echo "################################开始并发打包########################
 . build2.sh & . build3.sh &
 wait
 echo "################################并发打包结束################################"
-ls
-cd ../..
-ls
 cp -r webEditor build
 cp -r dist build
 echo "extart files end"
