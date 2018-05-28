@@ -1,9 +1,12 @@
 mkdir -p dist
+ls
 echo "pull tollgate"
 mkdir -p tollgate
 cd tollage
+ls
 git clone https://github.com/NavinfoWeb/Tollgate.git
 cd Tollgate
+ls
 npm install
 npm run-script build
 ls
