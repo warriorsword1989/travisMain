@@ -1,15 +1,11 @@
 mkdir -p dist
-echo "pull tollgate"
-mkdir -p tollgate
-cd tollgate
-git clone https://github.com/NavinfoWeb/Tollgate.git
-cd Tollgate
-npm install
-npm run-script build
-cp -r ./dist/* ../../dist
-echo "extart files star"
-cd ../..
 mkdir -p build
+cd build
+echo "################################开始并发打包################################"
+. build1.sh & . build2.sh. & .build3.sh
+wait
+echo "################################并发打包结束################################"
+cd ../..
 cp -r webEditor build
 cp -r dist build
 echo "extart files end"
