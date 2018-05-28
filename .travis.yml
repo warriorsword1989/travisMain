@@ -21,8 +21,8 @@ deploy:
   api_key: $GITHUB_TOKEN
   file: WebApp.zip
   skip_cleanup: true
-  # on:
-  #   tags: true
+  on:
+    tags: true
 cache:
   directories:
   - node_modules
