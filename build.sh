@@ -7,9 +7,9 @@ cd Tollgate
 npm install
 npm run-script build
 ls
-cp -r dist ../dist
+cp -r ./dist ../../dist
 echo "extart files start"
-cd ..
+cd ../..
 mkdir -p build
 cp -r webEditor build
 cp -r dist build
